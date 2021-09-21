@@ -12,7 +12,7 @@ public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private short id;
-
+    @Enumerated(EnumType.STRING)
     private Keyword keyword;
 
     @ManyToMany(mappedBy = "tags")

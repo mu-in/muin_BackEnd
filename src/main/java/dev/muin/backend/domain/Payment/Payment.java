@@ -1,5 +1,7 @@
 package dev.muin.backend.domain.Payment;
 
+import dev.muin.backend.domain.Stock;
+import dev.muin.backend.domain.User.User;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -16,4 +18,11 @@ public class Payment {
     private LocalDateTime payTime;
     private int price;
 
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name="stock_id")
+    private Stock stock;
 }

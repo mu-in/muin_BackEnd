@@ -1,6 +1,9 @@
 package dev.muin.backend.domain.Store;
 
+import dev.muin.backend.domain.Sales.Sales;
+import dev.muin.backend.domain.Stock;
 import dev.muin.backend.domain.Tag.Tag;
+import dev.muin.backend.domain.User.User;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -15,11 +18,10 @@ public class Store {
     @Column(name="store_id")
     private short id;
     private String uuid;
+    private String name;
 
     @Embedded
     private Location location;
-
-    private String name;
 
     @JoinTable(
         name = "store_tag",
@@ -27,6 +29,17 @@ public class Store {
         inverseJoinColumns = @JoinColumn(name = "tag_id"))
     @ManyToMany
     private List<Tag> tags;
+
+    @OneToOne
+    @JoinColumn(name = "sales_id")
+    private Sales sales;
+
+    @ManyToOne
+    @JoinColumn(name="user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "store")
+    private List<Stock> stocks;
 
     @Override
     public String toString() {
