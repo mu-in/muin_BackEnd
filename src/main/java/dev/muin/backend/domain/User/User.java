@@ -14,10 +14,18 @@ public class User {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     @Column(name="user_id")
     private short id;
+
+    @Column(length = 36)
     private String uuid;
+
+    @Column(length = 40)
     private String email;
+
+    @Column(length = 40)
     private String name;
+
     @Enumerated(EnumType.STRING)
+    @Column(length=10)
     private Role role;
 
     @OneToMany(mappedBy = "user")

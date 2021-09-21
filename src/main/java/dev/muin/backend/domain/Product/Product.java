@@ -13,10 +13,15 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "product_id")
     private short id;
+
     private String name;
+
     private String barcode;
+
     private int price;
+
     @Enumerated(EnumType.STRING)
+    @Column(length=15)
     private Category category;
 
     @OneToMany(mappedBy = "product")

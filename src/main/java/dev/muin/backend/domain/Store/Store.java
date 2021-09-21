@@ -17,7 +17,11 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="store_id")
     private short id;
+
+    @Column(length = 36)
     private String uuid;
+
+    @Column(length=10)
     private String name;
 
     @Embedded

@@ -14,6 +14,7 @@ public class Sales {
     private short id;
 
     private short month;
+
     private int sales;
 
     @OneToOne(mappedBy="sales")

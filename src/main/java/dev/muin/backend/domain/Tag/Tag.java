@@ -10,9 +10,8 @@ import java.util.List;
 @Entity
 public class Tag {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private short id;
     @Enumerated(EnumType.STRING)
+    @Column(length = 15)
     private Keyword keyword;
 
     @ManyToMany(mappedBy = "tags")

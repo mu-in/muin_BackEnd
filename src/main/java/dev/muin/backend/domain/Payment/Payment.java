@@ -14,8 +14,11 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="payment_id")
     private short id;
+
     private short quantity;
+
     private LocalDateTime payTime;
+
     private int price;
 
     @ManyToOne
