@@ -13,3 +13,7 @@ spring:
     properties:
       hibernate:
         format_sql: true
+    defer-datasource-initialization: true #Spring Boot 2.5 변경사항
+  sql:
+    init:
+      mode: always
