@@ -18,7 +18,7 @@ public class Store {
     @Column(name="store_id")
     private short id;
 
-    @Column(length = 36)
+    @Column(length = 36, unique = true)
     private String uuid;
 
     @Column(length=10)
