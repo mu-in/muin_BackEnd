@@ -1,6 +1,6 @@
 package dev.muin.backend.domain.Payment;
 
-import dev.muin.backend.domain.Stock;
+import dev.muin.backend.domain.Stock.Stock;
 import dev.muin.backend.domain.User.User;
 import lombok.Getter;
 

@@ -1,4 +1,4 @@
-package dev.muin.backend.domain;
+package dev.muin.backend.domain.Stock;
 
 import dev.muin.backend.domain.Payment.Payment;
 import dev.muin.backend.domain.Product.Product;

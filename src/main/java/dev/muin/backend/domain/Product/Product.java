@@ -1,6 +1,6 @@
 package dev.muin.backend.domain.Product;
 
-import dev.muin.backend.domain.Stock;
+import dev.muin.backend.domain.Stock.Stock;
 import lombok.Getter;
 
 import javax.persistence.*;

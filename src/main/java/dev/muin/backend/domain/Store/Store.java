@@ -1,7 +1,7 @@
 package dev.muin.backend.domain.Store;
 
 import dev.muin.backend.domain.Sales.Sales;
-import dev.muin.backend.domain.Stock;
+import dev.muin.backend.domain.Stock.Stock;
 import dev.muin.backend.domain.Tag.Tag;
 import dev.muin.backend.domain.User.User;
 import lombok.Getter;
