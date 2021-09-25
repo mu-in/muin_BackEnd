@@ -1,6 +1,6 @@
-package dev.muin.backend.domain.Tag;
+package dev.muin.backend.domain.Store;
 
-enum Keyword {
+public enum Keyword {
     SNACK("과자"),
     DRINKS("음료수"),
     ICECREAM("아이스크림"),

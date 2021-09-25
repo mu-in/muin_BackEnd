@@ -16,8 +16,6 @@ public class Product {
 
     private String name;
 
-    private String barcode;
-
     private int price;
 
     @Enumerated(EnumType.STRING)

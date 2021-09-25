@@ -15,7 +15,7 @@ public class User {
     @Column(name="user_id")
     private short id;
 
-    @Column(length = 36, unique = true)
+    @Column(length = 40, unique = true)
     private String uuid;
 
     @Column(length = 40, unique = true)

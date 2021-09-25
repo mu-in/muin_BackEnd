@@ -2,7 +2,6 @@ package dev.muin.backend.domain.Store;
 
 import dev.muin.backend.domain.Sales.Sales;
 import dev.muin.backend.domain.Stock.Stock;
-import dev.muin.backend.domain.Tag.Tag;
 import dev.muin.backend.domain.User.User;
 import lombok.Getter;
 
@@ -18,7 +17,7 @@ public class Store {
     @Column(name="store_id")
     private short id;
 
-    @Column(length = 36, unique = true)
+    @Column(length = 40, unique = true)
     private String uuid;
 
     @Column(length=10)
@@ -27,12 +26,14 @@ public class Store {
     @Embedded
     private Location location;
 
-    @JoinTable(
-        name = "store_tag",
-        joinColumns = @JoinColumn(name = "store_id"),
-        inverseJoinColumns = @JoinColumn(name = "tag_id"))
-    @ManyToMany
-    private List<Tag> tags;
+    @ElementCollection
+    @CollectionTable(
+            name = "store_keyword",
+            joinColumns = @JoinColumn(name = "store_id")
+    )
+    @Enumerated(EnumType.STRING)
+    @Column(length = 15)
+    private List<Keyword> keywords;
 
     @OneToOne
     @JoinColumn(name = "sales_id")
