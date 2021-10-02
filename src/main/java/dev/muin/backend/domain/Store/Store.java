@@ -48,6 +48,6 @@ public class Store {
 
     @Override
     public String toString() {
-        return String.format("{id=%d,uuid=%d,location=(%lf,%lf),name=%s,keyword=%s");
+        return String.format("{id=%d,uuid=%d,location=(%lf,%lf),name=%s,keyword=%s", id, uuid, location.getLatitude(), location.getLongitude(), name, keywords);
     }
 }
