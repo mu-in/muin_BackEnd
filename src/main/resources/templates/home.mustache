@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mu-in</title>
+    <!--<meta name="_csrf" content="{{!--csrf.token--}}">-->
+    <!--<meta name="_csrf_header" content="{{!--csrf.headerName--}}">-->
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+</head>
+<body>
+<div>
+    <p>
+        <a href="http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:8080/oauth2/redirect">구글</a>
+    </p>
+    <p>
+        cookie: <span id="jwt"></span>
+    </p>
+</div>
+<br>
+</body>
+</html>
+<script>
+    const showjwt = document.querySelector("#jwt");
+    const urlParams = new URLSearchParams(window.location.search);
+    const jwt = urlParams.get('token'); // queryString 값
+</script>
