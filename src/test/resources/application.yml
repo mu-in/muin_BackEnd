@@ -1,4 +1,6 @@
 spring:
+  profiles:
+    include: auth
   datasource:
     hikari:
       driver-class-name: org.h2.Driver
