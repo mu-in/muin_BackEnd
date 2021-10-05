@@ -21,6 +21,12 @@ public class SignUpRequest {
     @NotBlank
     private String password;
 
+    public SignUpRequest(String name, String email, String password){
+        this.name = name;
+        this.email = email;
+        this.password = password;
+    }
+
     public User toEntity(AuthProvider authProvider, PasswordEncoder passwordEncoder){
         return User.localBuilder()
                 .name(name)
