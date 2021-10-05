@@ -30,12 +30,11 @@ pipeline {
         withSonarQubeEnv(credentialsId: 'sonarqube', installationName: 'SonarQube Server') {
           sh './gradlew sonarqube'
         }
-    }
-
-    stage("Quality Gate") {
-      steps {
-        timeout(time: 1, unit: 'HOURS') {
-          waitForQualityGate abortPipeline: true
+        script {
+          def qg = waitForQualityGate()
+          if (qg.status != 'OK') {
+            error "Pipeline aborted due to quality gate failure: ${qg.status}"
+          }
         }
       }
     }
@@ -112,5 +111,4 @@ pipeline {
       slackSend (channel: '#jenkins', color: '#FF0000', message: "FAILED: Job '${env.JOB_NAME} [${env.BUILD_NUMBER}]' (${env.BUILD_URL})")
     }
   }
-}
 }
