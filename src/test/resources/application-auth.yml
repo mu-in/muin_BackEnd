@@ -1,16 +1,3 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: 'test'
-            client-secret: 'test'
-            redirectUri: 'test'
-            scope:
-              - email
-              - profile
-
 # 토큰 관련 secret Key(임의로 생성) 및 RedirectUri 설정
 # 60*60*24  => 1 day
 app:

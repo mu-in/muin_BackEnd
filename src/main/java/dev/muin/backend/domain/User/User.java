@@ -3,7 +3,6 @@ package dev.muin.backend.domain.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.muin.backend.domain.Payment.Payment;
 import dev.muin.backend.domain.Store.Store;
-import dev.muin.backend.oauth2.AuthProvider;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

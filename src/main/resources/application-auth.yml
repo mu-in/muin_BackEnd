@@ -1,16 +1,3 @@
-spring:
-  security:
-    oauth2:
-      client:
-        registration:
-          google:
-            client-id: '81887298760-6k987er6qhtus65g7hhgn6d19ur5fsaa.apps.googleusercontent.com'
-            client-secret: 'BzEmAnweU0joWD3MumgsUtbQ'
-            redirectUri: 'http://localhost:8080/oauth2/callback/google'
-            scope:
-              - email
-              - profile
-
 # 토큰 관련 secret Key(임의로 생성) 및 RedirectUri 설정
 # 60*60*24  => 1 day
 app:

@@ -1,11 +1,9 @@
 package dev.muin.backend;
 
-import dev.muin.backend.oauth2.AppProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 
-@EnableConfigurationProperties(AppProperties.class)
 @SpringBootApplication
 public class BackendApplication {
 
