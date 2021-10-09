@@ -1,45 +1,37 @@
 package dev.muin.backend.web;
 
-import dev.muin.backend.config.auth.JwtTokenProvider;
-import dev.muin.backend.domain.User.Role;
-import dev.muin.backend.domain.User.User;
-import dev.muin.backend.domain.User.UserRepository;
-import dev.muin.backend.web.request.LoginRequest;
+import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.request.JoinRequest;
+import dev.muin.backend.web.request.LoginRequest;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
 
+@Slf4j
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
-    private final PasswordEncoder passwordEncoder;
-    private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
+    private final UserService userService;
 
     //회원가입
     @PostMapping("/join")
-    public Short join(JoinRequest joinRequest) {
-        return userRepository.save(User.builder()
-                .email(joinRequest.getEmail())
-                .password(passwordEncoder.encode(joinRequest.getPassword()))
-                .role(Role.USER)
-                .build()).getId();
+    public String join(@RequestBody JoinRequest joinRequest) {
+        log.info(joinRequest.toString());
+        short userId = userService.join(joinRequest);
+        return String.valueOf(userId);
     }
 
     // 로그인
     @PostMapping("/login")
-    public String login(LoginRequest loginRequest) {
-        User member = userRepository.findByEmail(loginRequest.getEmail())
-                .orElseThrow(()-> new IllegalArgumentException("가입되지 않은 e-mail 입니다."));
-        if(!passwordEncoder.matches(loginRequest.getPassword(), member.getPassword())){
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
-        }
-        return jwtTokenProvider.createToken(member.getUsername(), member.getRole());
+    public String login(@RequestBody LoginRequest loginRequest) {
+        log.info(loginRequest.toString());
+        String jwt = userService.login(loginRequest);
+        return jwt;
     }
 }

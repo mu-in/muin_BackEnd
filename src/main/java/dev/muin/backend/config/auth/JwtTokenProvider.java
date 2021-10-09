@@ -5,7 +5,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
-@RequiredArgsConstructor
+
 @Component
 public class JwtTokenProvider {
 
@@ -25,8 +27,12 @@ public class JwtTokenProvider {
 
     // 토큰 유효시간
     private long tokenValidTime = 30 * 60 * 1000L;
+    private UserDetailsService userDetailsService;
 
-    private final UserDetailsService userDetailsService;
+    @Autowired
+    public JwtTokenProvider(UserDetailsService userDetailsService){
+        this.userDetailsService = userDetailsService;
+    }
 
     // 객체 초기화, secretKey를 Base64로 인코딩한다.
     @PostConstruct

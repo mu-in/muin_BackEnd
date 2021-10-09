@@ -12,20 +12,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 
-@Builder
+
 @NoArgsConstructor
 @Getter
 @Entity
 public class User implements UserDetails {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="user_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
     private short id;
 
     @Column(length = 40, unique = true)
@@ -47,7 +45,7 @@ public class User implements UserDetails {
      * 기본으로 USER를 가짐
      */
     @Enumerated(EnumType.STRING)
-    @Column(length=10)
+    @Column(length = 10)
     private Role role;
 
     @OneToMany(mappedBy = "user")
@@ -86,5 +84,13 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return false;
+    }
+
+    @Builder
+    public User(String email, String password, String name, Role role){
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.role = role;
     }
 }
