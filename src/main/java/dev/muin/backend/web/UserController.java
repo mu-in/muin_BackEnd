@@ -3,12 +3,13 @@ package dev.muin.backend.web;
 import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.request.JoinRequest;
 import dev.muin.backend.web.request.LoginRequest;
+import dev.muin.backend.web.response.LoginResponse;
+import dev.muin.backend.web.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 
 @Slf4j
@@ -19,19 +20,31 @@ public class UserController {
 
     private final UserService userService;
 
-    //회원가입
+    /**
+     * This request url is used by filter
+     * @see dev.muin.backend.config.auth.JwtAuthenticationFilter
+     */
     @PostMapping("/join")
-    public String join(@RequestBody JoinRequest joinRequest) {
+    public ResponseEntity<Short> join(@RequestBody JoinRequest joinRequest) throws Exception {
         log.info(joinRequest.toString());
         short userId = userService.join(joinRequest);
-        return String.valueOf(userId);
+        return new ResponseEntity<>(userId, HttpStatus.OK);
     }
 
-    // 로그인
+    /**
+     * This request url is used by filter
+     * @see dev.muin.backend.config.auth.JwtAuthenticationFilter
+     */
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest loginRequest) throws Exception {
         log.info(loginRequest.toString());
-        String jwt = userService.login(loginRequest);
-        return jwt;
+        LoginResponse loginResponse =  userService.login(loginRequest);
+        return new ResponseEntity<>(loginResponse, HttpStatus.OK);
+    }
+
+    @GetMapping("/{uuid}")
+    public ResponseEntity<UserResponse> myinfo(@PathVariable String uuid) {
+        UserResponse userResponse = userService.myInfo(uuid);
+        return new ResponseEntity<>(userResponse, HttpStatus.OK);
     }
 }

@@ -13,6 +13,9 @@ import javax.validation.constraints.NotNull;
 public class JoinRequest {
 
     @NotNull
+    private String uuid;
+
+    @NotNull
     @Email
     private String email;
 

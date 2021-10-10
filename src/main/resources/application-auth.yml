@@ -1,9 +1,9 @@
 # 토큰 관련 secret Key(임의로 생성) 및 RedirectUri 설정
 # 60*60*24  => 1 day
-app:
-  auth:
-    tokenSecret: '63F6847145BB37CC9A8919BF2AF75'
-    tokenExpirationMsec: 86400
-  oauth2:
-    authorizedRedirectUris:
-      - http://localhost:8080/oauth2/redirect
+#app:
+#  auth:
+#    tokenSecret: '63F6847145BB37CC9A8919BF2AF75'
+#    tokenExpirationMsec: 86400
+#  oauth2:
+#    authorizedRedirectUris:
+#      - http://localhost:8080/oauth2/redirect
