@@ -77,13 +77,13 @@ public class UserControllerTest {
                 .andExpect(status().isOk());
     }
 
-    @DisplayName("t-otp 생성")
-    @Test
-    public void tOTPGenerate() throws Exception {
-        String seed = "testseed";
-        RestTemplate restTemplate = new RestTemplate();
-        ResponseEntity<String> res = restTemplate.getForEntity("http://localhost:8080/user/totp/"+seed, String.class);
-        System.out.println(res);
-    }
+//    @DisplayName("t-otp 생성")
+//    @Test
+//    public void tOTPGenerate() throws Exception {
+//        String seed = "testseed";
+//        RestTemplate restTemplate = new RestTemplate();
+//        ResponseEntity<String> res = restTemplate.getForEntity("https://mu-in.herokuapp.com/user/totp/"+seed, String.class);
+//        System.out.println(res);
+//    }
 
 }
