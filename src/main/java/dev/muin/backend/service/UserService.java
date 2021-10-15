@@ -1,6 +1,6 @@
 package dev.muin.backend.service;
 
-import dev.muin.backend.config.auth.JwtTokenProvider;
+import dev.muin.backend.config.jwt.JwtTokenProvider;
 import dev.muin.backend.domain.User.Role;
 import dev.muin.backend.domain.User.User;
 import dev.muin.backend.domain.User.UserRepository;
@@ -28,7 +28,6 @@ public class UserService {
         User user = User.builder()
                 .uuid(joinRequest.getUuid())
                 .email(joinRequest.getEmail())
-                .password(passwordEncoder.encode(joinRequest.getPassword()))
                 .name(joinRequest.getName())
                 .role(Role.USER)
                 .build();

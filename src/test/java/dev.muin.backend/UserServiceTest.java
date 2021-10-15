@@ -15,7 +15,7 @@ public class UserServiceTest {
 
     @BeforeAll
     public void setup(){
-        JoinRequest joinRequest = new JoinRequest("kim@gmail.com", "kim", "1111");
+        JoinRequest joinRequest = new JoinRequest("uuidexample", "kim@gmail.com", "kim", "1111");
     }
 
 //    @DisplayName("첫 회원가입이면 정보를 저장한다.")

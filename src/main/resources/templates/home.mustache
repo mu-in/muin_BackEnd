@@ -9,18 +9,9 @@
 </head>
 <body>
 <div>
-    <p>
-        <a href="http://localhost:8080/oauth2/authorize/google?redirect_uri=http://localhost:8080/oauth2/redirect">구글</a>
-    </p>
-    <p>
-        cookie: <span id="jwt"></span>
-    </p>
+
 </div>
 <br>
 </body>
 </html>
-<script>
-    const showjwt = document.querySelector("#jwt");
-    const urlParams = new URLSearchParams(window.location.search);
-    const jwt = urlParams.get('token'); // queryString 값
-</script>
+

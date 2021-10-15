@@ -1,4 +1,4 @@
-package dev.muin.backend.config.auth;
+package dev.muin.backend.config.jwt;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;

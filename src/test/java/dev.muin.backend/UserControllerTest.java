@@ -1,7 +1,7 @@
 package dev.muin.backend;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.muin.backend.config.auth.JwtTokenProvider;
+import dev.muin.backend.config.jwt.JwtTokenProvider;
 import dev.muin.backend.domain.User.Role;
 import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.UserController;
@@ -14,9 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.client.RestTemplate;
 
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -74,6 +75,15 @@ public class UserControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk());
+    }
+
+    @DisplayName("t-otp 생성")
+    @Test
+    public void tOTPGenerate() throws Exception {
+        String seed = "testseed";
+        RestTemplate restTemplate = new RestTemplate();
+        ResponseEntity<String> res = restTemplate.getForEntity("http://localhost:8080/user/totp/"+seed, String.class);
+        System.out.println(res);
     }
 
 }

@@ -1,4 +1,4 @@
-package dev.muin.backend.config.auth;
+package dev.muin.backend.config.jwt;
 
 import dev.muin.backend.domain.User.UserRepository;
 import lombok.RequiredArgsConstructor;
