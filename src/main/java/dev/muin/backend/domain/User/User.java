@@ -33,16 +33,6 @@ public class User implements UserDetails {
     @Column(length = 40, unique = true, nullable = false)
     private String email;
 
-    private String imageUrl;
-
-    /**
-     * 보통 jwt는 id, password가 일치할 때 jwt 생성하지만
-     * 우리는 password를 모르는 대신 Google에서 제공하는 검증기를 사용한다.
-     * (issue #14)
-     */
-//    @JsonIgnore
-//    private String password;
-
     @Column(length = 40, nullable = false)
     private String name;
 

@@ -10,7 +10,6 @@ import lombok.Getter;
 public class UserResponse {
     private String uuid;
     private String email;
-    private String imageUrl;
     private String name;
     private Role role;
 
@@ -18,7 +17,6 @@ public class UserResponse {
         return UserResponse.builder()
                 .uuid(user.getUuid())
                 .email(user.getEmail())
-                .imageUrl(user.getImageUrl())
                 .name(user.getName())
                 .role(user.getRole())
                 .build();
