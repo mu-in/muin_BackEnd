@@ -60,11 +60,11 @@ public class UserControllerTest {
 //                .andExpect(status().isOk());
 //    }
 
-    @DisplayName("로그인 성공")
+    @DisplayName("로그인 및 회원가입 성공")
     @Test
     public void login() throws Exception{
-        LoginRequest loginRequest = new LoginRequest("uuidexample","kimgmailcom","kim", "1111");
-        LoginResponse loginResponse = new LoginResponse("tokenexample", "uuidexample", Role.USER);
+        LoginRequest loginRequest = new LoginRequest("idtokenexample","kimgmailcom","kim");
+        LoginResponse loginResponse = new LoginResponse("jwtexample", "uuidexample", Role.USER);
 
         given(userService.saveOrUpdate(loginRequest)).willReturn(loginResponse);
 
@@ -73,14 +73,5 @@ public class UserControllerTest {
                 .content(objectMapper.writeValueAsString(loginRequest)))
                 .andExpect(status().isOk());
     }
-
-//    @DisplayName("t-otp 생성")
-//    @Test
-//    public void tOTPGenerate() throws Exception {
-//        String seed = "testseed";
-//        RestTemplate restTemplate = new RestTemplate();
-//        ResponseEntity<String> res = restTemplate.getForEntity("https://mu-in.herokuapp.com/user/totp/"+seed, String.class);
-//        System.out.println(res);
-//    }
 
 }
