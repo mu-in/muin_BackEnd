@@ -1,6 +1,5 @@
 package dev.muin.backend.config.jwt;
 
-import dev.muin.backend.domain.User.Role;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -40,11 +39,9 @@ public class JwtTokenProvider {
 
     // 정보를 암호화하고 signature 적용
     public String createToken(String email) {
-        Claims claims = Jwts.claims(); // JWT payload에 저장되는 정보단위
         Date now = new Date();
         return Jwts.builder()
                 //header
-//                .setHeaderParam("typ", "JWT") //token 타입
                 .setSubject("userInfo") //token 제목
                 //payload
                 .claim("email", email)
