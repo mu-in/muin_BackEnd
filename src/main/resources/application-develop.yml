@@ -1,0 +1,20 @@
+spring:
+  datasource:
+    hikari:
+      jdbc-url: jdbc:mariadb://uyu7j8yohcwo35j3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/kg614li1sbrdwzux?characterEncoding=UTF-8&serverTimezone=UTC
+      driver-class-name: org.mariadb.jdbc.Driver
+      username: apmxqxkdd9pzrvcd
+      password: y1tlva8cpsd0cs2v
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        format_sql: true
+    defer-datasource-initialization: true #Spring Boot 2.5 변경사항
+  sql:
+    init:
+      mode: always
