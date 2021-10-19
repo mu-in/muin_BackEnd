@@ -1,6 +1,7 @@
 package dev.muin.backend.config.jwt;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
@@ -23,7 +24,7 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
                          FilterChain chain) throws IOException, ServletException {
         String path = ((HttpServletRequest)request).getRequestURI();
 
-        if(!path.equals("/user/login") && !path.equals("/user/join")) {
+        if(!path.equals("/user/login")) {
             // 헤더에서 jwt를 읽어온다.
             String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
