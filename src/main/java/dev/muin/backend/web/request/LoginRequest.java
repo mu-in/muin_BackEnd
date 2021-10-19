@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 public class LoginRequest {
 
     @NotNull
-    private String uuid; //id_token
+    private String id_token;
 
     @NotNull
     @Email
@@ -21,7 +21,4 @@ public class LoginRequest {
 
     @NotNull
     private String name;
-
-    @NotNull
-    private String password;
 }

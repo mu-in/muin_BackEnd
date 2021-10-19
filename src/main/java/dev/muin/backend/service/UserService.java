@@ -4,6 +4,7 @@ import dev.muin.backend.config.jwt.JwtTokenProvider;
 import dev.muin.backend.domain.User.Role;
 import dev.muin.backend.domain.User.User;
 import dev.muin.backend.domain.User.UserRepository;
+import dev.muin.backend.util.Base32Util;
 import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
 import dev.muin.backend.web.response.UserResponse;
@@ -12,36 +13,39 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Slf4j
 @RequiredArgsConstructor
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
-
-
-
 
     @Transactional(readOnly = true)
     public LoginResponse saveOrUpdate(LoginRequest loginRequest) {
         User member = userRepository.findByEmail(loginRequest.getEmail())
-                .orElse(null);//(() -> new IllegalArgumentException("가입되지 않은 e-mail 입니다."));
+                .orElse(null);
         if(member == null) member = join(loginRequest);
-
-        String jwt = jwtTokenProvider.createToken(member.getEmail(), member.getUuid(), member.getRole());
-
-        return new LoginResponse(jwt, member.getUuid(), member.getRole());
+        String jwt = jwtTokenProvider.createToken(member.getEmail());
+        String encodedUuid = Base32Util.encode(member.getUuid());
+        return new LoginResponse(jwt, encodedUuid, member.getRole());
     }
 
     @Transactional(readOnly = true)
-    public UserResponse myInfo(String uuid){
+    public UserResponse myInfo(String uuid) {
+        uuid = Base32Util.decode(uuid);
         User member = userRepository.findByUuid(uuid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자 입니다."));
-        return UserResponse.of(member);
+        String encodedUuid = Base32Util.encode(member.getUuid());
+        return UserResponse.of(member, encodedUuid);
     }
 
     private User join(LoginRequest loginRequest) throws IllegalArgumentException{
+        String uuid = UUID.randomUUID().toString();
+        log.info("joined user's uuid: " + uuid);
         User user = User.builder()
-                .uuid(loginRequest.getUuid())
+                .uuid(uuid)
                 .email(loginRequest.getEmail())
                 .name(loginRequest.getName())
                 .role(Role.USER)

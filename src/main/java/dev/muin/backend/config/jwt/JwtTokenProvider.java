@@ -39,7 +39,7 @@ public class JwtTokenProvider {
     }
 
     // 정보를 암호화하고 signature 적용
-    public String createToken(String email, String userUuid, Role role) {
+    public String createToken(String email) {
         Claims claims = Jwts.claims(); // JWT payload에 저장되는 정보단위
         Date now = new Date();
         return Jwts.builder()
@@ -48,8 +48,6 @@ public class JwtTokenProvider {
                 .setSubject("userInfo") //token 제목
                 //payload
                 .claim("email", email)
-                .claim("uuid", userUuid)
-                .claim("role", role)
                 .setIssuedAt(now)   //토큰 발행 시간 정보
                 .setExpiration(new Date(now.getTime() + tokenValidTime)) //만료 시간
                 //signature

@@ -7,18 +7,16 @@ import lombok.Getter;
 
 @Builder
 @Getter
-public class UserResponse {
-    private String uuid;
+public class UserResponse{
+    private String uuid;  // Base32-encoded
     private String email;
-    private String imageUrl;
     private String name;
     private Role role;
 
-    public static UserResponse of(User user){
+    public static UserResponse of(User user, String encodedUuid){
         return UserResponse.builder()
-                .uuid(user.getUuid())
+                .uuid(encodedUuid)
                 .email(user.getEmail())
-                .imageUrl(user.getImageUrl())
                 .name(user.getName())
                 .role(user.getRole())
                 .build();
