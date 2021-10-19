@@ -3,6 +3,7 @@ package dev.muin.backend.web.request;
 import lombok.*;
 
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 
 @ToString
 @NoArgsConstructor
@@ -10,10 +11,17 @@ import javax.validation.constraints.Email;
 @Setter
 @Getter
 public class LoginRequest {
-    @NonNull
+
+    @NotNull
+    private String uuid; //id_token
+
+    @NotNull
     @Email
     private String email;
 
-    @NonNull
+    @NotNull
+    private String name;
+
+    @NotNull
     private String password;
 }
