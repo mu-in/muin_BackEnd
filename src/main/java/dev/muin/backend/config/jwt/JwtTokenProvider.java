@@ -1,9 +1,6 @@
 package dev.muin.backend.config.jwt;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -61,24 +58,38 @@ public class JwtTokenProvider {
     // 토큰에서 회원 정보 추출 (디코딩)
     public String getPk(String token) {
         String res = (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");
-        log.info("loadUserByUsername 에 들어감: "+res);
+        log.info("jwt 내부의 사용자 식별자: "+res);
         return res;
     }
 
     // Request의 Header에서 token 값을 가져온다.
-    public String resolveToken(HttpServletRequest request) {
-        String res = request.getHeader(HttpHeaders.AUTHORIZATION).substring("Bearer ".length());
-        log.info("resolveToken: " + res);
+    public String resolveToken(HttpServletRequest request){
+        String res = null;
+        try {
+            res = request.getHeader(HttpHeaders.AUTHORIZATION).substring("Bearer ".length());
+        } catch(NullPointerException e){
+            log.error("Header AUTHORIZATION is not exist");
+        }
+        log.info("jwt: " + res);
         return res;
     }
 
     // 토큰의 유효성 + 만료일자 확인
     public boolean validateToken(String jwtToken) {
         try {
-            Jws<Claims> claims = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
-            return !claims.getBody().getExpiration().before(new Date());
-        } catch (Exception e) {
-            return false;
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
+            return true;
+        } catch (SignatureException e) {
+            log.error("Invalid JWT signature: {}", e.getMessage());
+        } catch (MalformedJwtException e) {
+            log.error("Invalid JWT token: {}", e.getMessage());
+        } catch (ExpiredJwtException e) {
+            log.error("JWT token is expired: {}", e.getMessage());
+        } catch (UnsupportedJwtException e) {
+            log.error("JWT token is unsupported: {}", e.getMessage());
+        } catch (IllegalArgumentException e) {
+            log.error("JWT claims string is empty: {}", e.getMessage());
         }
+        return false;
     }
 }
