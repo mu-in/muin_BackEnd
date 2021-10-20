@@ -1,6 +1,7 @@
 package dev.muin.backend.config.jwt;
 
 
+import dev.muin.backend.config.ExceptionHandlerFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,11 +17,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private AuthEntryPointJwt unauthorizedHandler;
+//    @Autowired
+//    private AuthEntryPointJwt unauthorizedHandler;
 
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private ExceptionHandlerFilter exceptionHandlerFilter;
+
 
     @Bean
     @Override
@@ -38,7 +43,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable()
                 .csrf() // csrf 보안 토큰 disablble
                 .disable()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+//                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로
                 .and()
                 .authorizeRequests()
@@ -49,6 +54,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
-//        http.addFilterBefore(exceptionHandlerFilter, JwtRequestFilter.class);
+        http.addFilterBefore(exceptionHandlerFilter, JwtAuthenticationFilter.class);
     }
 }

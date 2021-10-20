@@ -1,7 +1,5 @@
 package dev.muin.backend.web;
 
-import dev.muin.backend.config.otp.CryptoType;
-import dev.muin.backend.config.otp.TOTP;
 import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
@@ -11,8 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Calendar;
 
 
 @Slf4j

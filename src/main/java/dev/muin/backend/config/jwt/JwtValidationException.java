@@ -5,13 +5,15 @@ import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+
 /**
  * This occurs when jwt included in Http request header is not valid
  */
 @Getter
-public class JwtValidationException extends JwtException {
+public class JwtValidationException extends RuntimeException {
 
-    private HttpStatus httpStatus;
+    private HttpStatus httpStatus = INTERNAL_SERVER_ERROR;
 
     public JwtValidationException(String msg) {
         super(msg);

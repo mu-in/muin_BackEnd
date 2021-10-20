@@ -1,12 +1,10 @@
 package dev.muin.backend.config.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +19,7 @@ import java.util.Date;
 
 /**
  * JWT Filter에서 사용되는 Util
+ *
  * @see JwtAuthenticationFilter
  */
 @Slf4j
@@ -59,13 +58,8 @@ public class JwtTokenProvider {
     }
 
     // JWT에서 인증 정보 조회
-    public Authentication getAuthentication(HttpServletRequest request,String token) {
-        UserDetails userDetails=null;
-        try {
-            userDetails = userDetailsService.loadUserByUsername(this.getPk(token));
-        }catch(UsernameNotFoundException e){
-            request.setAttribute("exception", ErrorCode.EXPIRED_TOKEN.getCode());
-        }
+    public Authentication getAuthentication(HttpServletRequest request, String token) throws UsernameNotFoundException {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 
@@ -83,28 +77,34 @@ public class JwtTokenProvider {
      * @return jwt
      * @throws NullPointerException HttpHeader에 AUTHORIZATION 키 없으면 발생
      */
-    public String resolveToken(HttpServletRequest request) {
+    public String resolveToken(HttpServletRequest request) throws NullPointerException {
         String res = null;
         try {
-        res = request.getHeader(HttpHeaders.AUTHORIZATION).substring(JWT_PREFIX.length());
-        log.info("jwt: " + res);
-        }catch(NullPointerException e){
-            e.printStackTrace();
-            request.setAttribute("exception", ErrorCode.NO_EXIST_TOKEN.getCode());
+            res = request.getHeader(HttpHeaders.AUTHORIZATION).substring(JWT_PREFIX.length());
+            log.info("jwt: " + res);
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Header for Jwt is not exist or valid");
         }
         return res;
     }
 
-    // 토큰의 유효성 + 만료일자 확인
-    public boolean validateToken(HttpServletRequest request, String jwtToken) {
+    /**
+     * UnsupportedJwtException – if the claimsJws argument does not represent an Claims JWS
+     * MalformedJwtException – if the claimsJws string is not a valid JWS
+     * SignatureException – if the claimsJws JWS signature validation fails
+     * ExpiredJwtException – if the specified JWT is a Claims JWT and the Claims has an expiration time before the time this method is invoked.
+     * IllegalArgumentException – if the claimsJws string is null or empty or only whitespace
+     */
+    public boolean validateToken(HttpServletRequest request, String jwtToken) throws RuntimeException {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return true;
-        } catch (ExpiredJwtException e) {
-            request.setAttribute("exception", ErrorCode.EXPIRED_TOKEN.getCode());
-        } catch (JwtException e) {
-            request.setAttribute("exception", ErrorCode.INVALID_TOKEN.getCode());
+        } catch (ExpiredJwtException e) { //jwt가 만료됨
+            throw new JwtValidationException("JWT is expired", e, HttpStatus.REQUEST_TIMEOUT);
+        } catch (UnsupportedJwtException | MalformedJwtException| IllegalArgumentException e) { //Claims에 담았던 인자의 키밸류들이 아님
+            throw new JwtValidationException("JWT's type or value is invalid", e, HttpStatus.REQUEST_TIMEOUT);
+        } catch (SignatureException e) { //  signature이 유효하지 않음
+            throw new JwtValidationException("JWT's signature is not invalid", e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return false;
     }
 }

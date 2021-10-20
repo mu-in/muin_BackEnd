@@ -16,8 +16,7 @@ import java.io.IOException;
 
 /**
  * Jwt를 인증, 관리하는 필터로, 매 요청마다 유효한 토큰인지 검사한다.
- *
- * @see AuthenticationEntryPoint filter의 예외 핸들링
+ * @see dev.muin.backend.config.ExceptionHandlerFilter 에서 예외 핸들링
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -31,15 +30,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         if (!path.equals("/user/login")) {
             // 헤더에서 jwt를 읽어온다.
-            String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
+                String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
-            //유효한 토큰인지 확인
-            if (token != null && jwtTokenProvider.validateToken(request, token)) {
-                // 토큰이 유효하면 토큰에서 유저 정보를 받아온다.
-                Authentication authentication = jwtTokenProvider.getAuthentication(request,token);
-                // SecurityContext에 Authentication 객체를 저장
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
+                //유효한 토큰인지 확인
+                if (token != null && jwtTokenProvider.validateToken(request, token)) {
+                    // 토큰이 유효하면 토큰에서 유저 정보를 받아온다.
+                    Authentication authentication = jwtTokenProvider.getAuthentication(request, token);
+                    // SecurityContext에 Authentication 객체를 저장
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+
         }
         filterChain.doFilter(request, response);
     }
