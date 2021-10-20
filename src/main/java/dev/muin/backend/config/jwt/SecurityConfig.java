@@ -19,15 +19,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
+    private AuthEntryPointJwt unauthorizedHandler;
+
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
 
-    // 암호화에 필요한 PasswordEncoder를 Bean 등록
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    // authenticationManager를 Bean 등록
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -44,9 +40,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable()
                 .csrf() // csrf 보안 토큰 disablble
                 .disable()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로
                 .and()
                 .authorizeRequests()
+                .antMatchers("/user/totp/**").hasAnyRole("MANAGER")
                 .antMatchers("/**").permitAll()
                 .and()
                 .cors()
