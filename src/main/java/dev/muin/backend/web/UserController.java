@@ -48,16 +48,16 @@ public class UserController {
     @GetMapping("/totp/{uuid}")
     public ResponseEntity<String> generateTOTP(@PathVariable String uuid) throws Exception {
 
-        Calendar time = Calendar.getInstance();
+//        Calendar time = Calendar.getInstance();
+//
+//        //현재 시간, 0L(초깃값), 10L(10초까지 TOTP 키 유지 시간)
+//        // steps: 16자리(0000000009BD76C4)
+//        log.info(String.valueOf(time.getTimeInMillis()));
+//        String steps = TOTP.calcSteps(1234567891010L, 0L, 15L);
+//
+//        //seed(시드값), steps(위에서 계산한 값), TOTP 출력 자리수, 암호화 방식 --> 이대로면 8자리 TOTP값이 반환됩니다.
+//        String res = TOTP.generateTOTP(uuid, steps, "8", CryptoType.HmacSHA256);
 
-        //현재 시간, 0L(초깃값), 10L(10초까지 TOTP 키 유지 시간)
-        // steps: 16자리(0000000009BD76C4)
-        log.info(String.valueOf(time.getTimeInMillis()));
-        String steps = TOTP.calcSteps(1234567891010L, 0L, 15L);
-
-        //seed(시드값), steps(위에서 계산한 값), TOTP 출력 자리수, 암호화 방식 --> 이대로면 8자리 TOTP값이 반환됩니다.
-        String res = TOTP.generateTOTP(uuid, steps, "8", CryptoType.HmacSHA256);
-
-        return new ResponseEntity<>(res, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.OK);
     }
 }
