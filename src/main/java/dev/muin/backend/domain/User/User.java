@@ -1,6 +1,5 @@
 package dev.muin.backend.domain.User;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import dev.muin.backend.domain.Payment.Payment;
 import dev.muin.backend.domain.Store.Store;
 import lombok.Builder;
@@ -12,7 +11,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 
 

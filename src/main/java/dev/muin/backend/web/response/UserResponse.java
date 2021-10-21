@@ -13,9 +13,9 @@ public class UserResponse{
     private String name;
     private Role role;
 
-    public static UserResponse of(User user, String encodedUuid){
+    public static UserResponse of(User user){
         return UserResponse.builder()
-                .uuid(encodedUuid)
+                .uuid(user.getUuid())
                 .email(user.getEmail())
                 .name(user.getName())
                 .role(user.getRole())
