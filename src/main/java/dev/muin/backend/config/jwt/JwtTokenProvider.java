@@ -102,7 +102,7 @@ public class JwtTokenProvider {
         } catch (ExpiredJwtException e) { //jwt가 만료됨
             throw new JwtValidationException("JWT is expired", e, HttpStatus.REQUEST_TIMEOUT);
         } catch (UnsupportedJwtException | MalformedJwtException| IllegalArgumentException e) { //Claims에 담았던 인자의 키밸류들이 아님
-            throw new JwtValidationException("JWT's type or value is invalid", e, HttpStatus.REQUEST_TIMEOUT);
+            throw new JwtValidationException("JWT's type or value is invalid", e, HttpStatus.UNAUTHORIZED);
         } catch (SignatureException e) { //  signature이 유효하지 않음
             throw new JwtValidationException("JWT's signature is not invalid", e, HttpStatus.INTERNAL_SERVER_ERROR);
         }
