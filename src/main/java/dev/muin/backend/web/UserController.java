@@ -74,7 +74,7 @@ public class UserController {
 
     @PostMapping("/auth/store")
     public ResponseEntity<String> authenticateManager(@RequestBody AddManagerRoleRequest addManagerRoleRequest) {
-        userService.authenticateManager(addManagerRoleRequest);
-        return ResponseEntity.ok("success");
+        String res = userService.authenticateManager(addManagerRoleRequest);
+        return ResponseEntity.ok(res);
     }
 }

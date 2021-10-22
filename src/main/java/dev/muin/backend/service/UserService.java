@@ -57,9 +57,13 @@ public class UserService {
 
     /**
      * Add a "Manager" Role to user. Assume that the store is already registered.
+     * Fail Conditions:
+     * 1. Invalid storeUuid or Invalid userUuid
+     * 2. Already exist of store's manager // TODO
+     * 3. Already exist of other store's location // TODO
      */
     @Transactional
-    public void authenticateManager(AddManagerRoleRequest addManagerRoleRequest)
+    public String authenticateManager(AddManagerRoleRequest addManagerRoleRequest)
             throws UsernameNotFoundException, IllegalArgumentException {
         User member = userRepository.findByUuid(addManagerRoleRequest.getUserUuid())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
@@ -71,5 +75,6 @@ public class UserService {
 
         store.updateUser(member);
         member.updateToManager();
+        return String.format("Certified as a manager of %s", store.getName());
     }
 }
