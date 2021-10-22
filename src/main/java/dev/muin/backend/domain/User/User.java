@@ -50,6 +50,10 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "user")
     private List<Payment> payments;
 
+    public void updateToManager(){
+        this.role = Role.MANAGER;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<SimpleGrantedAuthority> res = new ArrayList<>();

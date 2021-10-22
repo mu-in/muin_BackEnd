@@ -1,12 +1,15 @@
 package dev.muin.backend.service;
 
 import dev.muin.backend.config.jwt.JwtTokenProvider;
+import dev.muin.backend.domain.Store.Store;
+import dev.muin.backend.domain.Store.StoreRepository;
 import dev.muin.backend.domain.User.Role;
 import dev.muin.backend.domain.User.User;
 import dev.muin.backend.domain.User.UserRepository;
+import dev.muin.backend.service.util.UserUtil;
+import dev.muin.backend.web.request.AddManagerRoleRequest;
 import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
-import dev.muin.backend.web.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +24,7 @@ import java.util.UUID;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final StoreRepository storeRepository;
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional(readOnly = true)
@@ -49,5 +53,23 @@ public class UserService {
                 .build();
 
         return userRepository.save(user);
+    }
+
+    /**
+     * Add a "Manager" Role to user. Assume that the store is already registered.
+     */
+    @Transactional
+    public void authenticateManager(AddManagerRoleRequest addManagerRoleRequest)
+            throws UsernameNotFoundException, IllegalArgumentException {
+        User member = userRepository.findByUuid(addManagerRoleRequest.getUserUuid())
+                .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
+        Store store = storeRepository.findByUuid(addManagerRoleRequest.getStoreUuid())
+                .orElseThrow(() -> new NullPointerException("Store Not Found"));
+        if(!UserUtil.isLocationValid(addManagerRoleRequest, store.getLocation())){
+            throw new IllegalArgumentException("Requested store is not valid");
+        }
+
+        store.updateUser(member);
+        member.updateToManager();
     }
 }
