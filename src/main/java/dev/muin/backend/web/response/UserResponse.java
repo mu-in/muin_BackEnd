@@ -8,7 +8,7 @@ import lombok.Getter;
 @Builder
 @Getter
 public class UserResponse{
-    private String uuid;  // Base32-encoded
+    private String uuid;
     private String email;
     private String name;
     private Role role;

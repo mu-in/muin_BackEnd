@@ -4,11 +4,15 @@ import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
 import dev.muin.backend.web.response.UserResponse;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Date;
+import java.util.regex.PatternSyntaxException;
 
 
 @Slf4j
@@ -18,10 +22,10 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserService userService;
+    private final short QR_VALID_TIME = 30; //30sec
 
     /**
      * This request "url" String is used by filter
-     *
      * @see dev.muin.backend.config.jwt.JwtAuthenticationFilter
      */
     @PostMapping("/login")
@@ -38,22 +42,28 @@ public class UserController {
     }
 
     /**
-     * @param uuid
-     * @return 8-digit Time-Based OTP
+     * @param seed {time}:{uuid}
      */
-    @GetMapping("/totp/{uuid}")
-    public ResponseEntity<String> generateTOTP(@PathVariable String uuid) throws Exception {
+    @GetMapping("/qrcode")
+    public ResponseEntity<Boolean> generateTOTP(@RequestParam @NonNull String seed) throws Exception{
+        boolean res = false;
 
-//        Calendar time = Calendar.getInstance();
-//
-//        //현재 시간, 0L(초깃값), 10L(10초까지 TOTP 키 유지 시간)
-//        // steps: 16자리(0000000009BD76C4)
-//        log.info(String.valueOf(time.getTimeInMillis()));
-//        String steps = TOTP.calcSteps(1234567891010L, 0L, 15L);
-//
-//        //seed(시드값), steps(위에서 계산한 값), TOTP 출력 자리수, 암호화 방식 --> 이대로면 8자리 TOTP값이 반환됩니다.
-//        String res = TOTP.generateTOTP(uuid, steps, "8", CryptoType.HmacSHA256);
+        // 서버
+        Date now = new Date();
+        Long nowMilli = now.getTime();
+        Long serverValidTime = nowMilli / QR_VALID_TIME;
 
-        return new ResponseEntity<>(null, HttpStatus.OK);
+        String[] seq = null;
+        try {
+            seq = seed.split(":");
+        } catch (PatternSyntaxException e) {
+            throw new IllegalArgumentException("Character \":\" is not exist in query string");
+        }
+        Long reqTimeMilli = Long.parseLong(seq[0]);
+        Long clientValidTime = reqTimeMilli / QR_VALID_TIME;
+
+        if (serverValidTime == clientValidTime) res = true;
+
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

@@ -9,6 +9,7 @@ import dev.muin.backend.web.response.LoginResponse;
 import dev.muin.backend.web.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +34,7 @@ public class UserService {
 
     @Transactional(readOnly = true)
     public UserResponse myInfo(String uuid) {
-        User member = userRepository.findByUuid(uuid).orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자 입니다."));
+        User member = userRepository.findByUuid(uuid).orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         return UserResponse.of(member);
     }
 
