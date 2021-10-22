@@ -8,6 +8,6 @@ import lombok.Getter;
 @Getter
 public class LoginResponse {
     private String jwt;
-    private String uuid; // Base32-encoded
+    private String uuid;
     private Role role;
 }
