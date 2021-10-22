@@ -23,9 +23,11 @@ public class UserController {
 
     private final UserService userService;
     private final short QR_VALID_TIME = 30; //30sec
+    private final String QR_SEPARATOR = ":";
 
     /**
      * This request "url" String is used by filter
+     *
      * @see dev.muin.backend.config.jwt.JwtAuthenticationFilter
      */
     @PostMapping("/login")
@@ -45,7 +47,7 @@ public class UserController {
      * @param seed {time}:{uuid}
      */
     @GetMapping("/qrcode")
-    public ResponseEntity<Boolean> generateTOTP(@RequestParam @NonNull String seed) throws Exception{
+    public ResponseEntity<Boolean> generateTOTP(@RequestParam @NonNull String seed) throws Exception {
         boolean res = false;
 
         // 서버
@@ -54,12 +56,15 @@ public class UserController {
         Long serverValidTime = nowMilli / QR_VALID_TIME;
 
         String[] seq = null;
+        Long reqTimeMilli;
         try {
-            seq = seed.split(":");
+            seq = seed.split(QR_SEPARATOR);
+            reqTimeMilli = Long.parseLong(seq[0]);
         } catch (PatternSyntaxException e) {
-            throw new IllegalArgumentException("Character \":\" is not exist in query string");
+            throw new IllegalArgumentException("Separator of the value is not exist or invalid");
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Format of the value is invalid");
         }
-        Long reqTimeMilli = Long.parseLong(seq[0]);
         Long clientValidTime = reqTimeMilli / QR_VALID_TIME;
 
         if (serverValidTime == clientValidTime) res = true;
