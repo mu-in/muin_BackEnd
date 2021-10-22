@@ -12,7 +12,14 @@ public class ExceptionController {
 
     @ExceptionHandler(value = {IllegalArgumentException.class, UsernameNotFoundException.class})
     public ErrorResponse errorHandler(RuntimeException e) {
-        log.warn(e.getMessage());
+        e.printStackTrace();
+        ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST,e.getMessage());
+        return errorResponse;
+    }
+
+    @ExceptionHandler(value = {NullPointerException.class})
+    public ErrorResponse npeHandler(NullPointerException e) {
+        e.printStackTrace();
         ErrorResponse errorResponse = new ErrorResponse(HttpStatus.BAD_REQUEST,e.getMessage());
         return errorResponse;
     }
