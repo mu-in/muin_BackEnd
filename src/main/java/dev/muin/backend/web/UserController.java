@@ -37,12 +37,6 @@ public class UserController {
         return ResponseEntity.ok(loginResponse);
     }
 
-    @GetMapping("/{uuid}")
-    public ResponseEntity<UserResponse> myInfo(@PathVariable String uuid) {
-        UserResponse userResponse = userService.myInfo(uuid);
-        return new ResponseEntity<>(userResponse, HttpStatus.OK);
-    }
-
     /**
      * @param seed {time}:{uuid}
      */
@@ -73,8 +67,8 @@ public class UserController {
     }
 
     @PostMapping("/auth/store")
-    public ResponseEntity<String> authenticateManager(@RequestBody AddManagerRoleRequest addManagerRoleRequest) {
-        String res = userService.authenticateManager(addManagerRoleRequest);
+    public ResponseEntity<String> authenticateManager(HttpServletRequest request,  @RequestBody AddManagerRoleRequest addManagerRoleRequest) {
+        String res = userService.authenticateManager(request, addManagerRoleRequest);
         return ResponseEntity.ok(res);
     }
 }

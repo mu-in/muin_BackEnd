@@ -28,7 +28,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = ((HttpServletRequest) request).getRequestURI();
 
-        if (!path.equals("/user/login")) {
+        if (!path.equals("/user/login") && !path.equals("/user/qrcode")) {
             // 헤더에서 jwt를 읽어온다.
                 String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
