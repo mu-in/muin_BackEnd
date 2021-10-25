@@ -71,9 +71,9 @@ public class UserService {
         }
         if (store.getUser() != null) {
             if (store.getUser().equals(member)) {
-                throw new IllegalArgumentException("You already certified as a manager");
+                throw new IllegalArgumentException("You are already certified as a manager");
             }
-            throw new IllegalArgumentException("Requested store is already owned by others");
+            throw new IllegalArgumentException("Requested store is already owned by other user");
         }
 
         store.updateUser(member);
@@ -81,7 +81,7 @@ public class UserService {
         return String.format("Certified as a manager of %s", store.getName());
     }
 
-    public boolean isSameUserAsJwt(HttpServletRequest request, String dtoEmail) {
+    private boolean isSameUserAsJwt(HttpServletRequest request, String dtoEmail) {
         String jwt = jwtTokenProvider.resolveToken(request);
         String email = jwtTokenProvider.getPk(jwt);
         if(email.equals(dtoEmail)) return true;

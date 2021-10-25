@@ -1,16 +1,16 @@
 package dev.muin.backend.web;
 
 import dev.muin.backend.service.UserService;
-import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.request.AddManagerRoleRequest;
+import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
-import dev.muin.backend.web.response.UserResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 import java.util.regex.PatternSyntaxException;
 
@@ -67,7 +67,7 @@ public class UserController {
     }
 
     @PostMapping("/auth/store")
-    public ResponseEntity<String> authenticateManager(HttpServletRequest request,  @RequestBody AddManagerRoleRequest addManagerRoleRequest) {
+    public ResponseEntity<String> authenticateManager(HttpServletRequest request, @RequestBody AddManagerRoleRequest addManagerRoleRequest) {
         String res = userService.authenticateManager(request, addManagerRoleRequest);
         return ResponseEntity.ok(res);
     }
