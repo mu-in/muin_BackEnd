@@ -4,6 +4,7 @@ import dev.muin.backend.domain.Sales.Sales;
 import dev.muin.backend.domain.Stock.Stock;
 import dev.muin.backend.domain.User.User;
 import lombok.Getter;
+import lombok.NonNull;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,7 +21,7 @@ public class Store {
     @Column(length = 40, unique = true)
     private String uuid;
 
-    @Column(length=10)
+    @Column(length=20)
     private String name;
 
     @Embedded
@@ -45,6 +46,11 @@ public class Store {
 
     @OneToMany(mappedBy = "store")
     private List<Stock> stocks;
+
+    public void updateUser(@NonNull User user) {
+        this.user = user;
+        user.getStores().add(this);
+    }
 
     @Override
     public String toString() {

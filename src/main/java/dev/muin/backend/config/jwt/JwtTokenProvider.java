@@ -58,7 +58,7 @@ public class JwtTokenProvider {
     }
 
     // JWT에서 인증 정보 조회
-    public Authentication getAuthentication(HttpServletRequest request, String token) throws UsernameNotFoundException {
+    public Authentication getAuthentication(String token) throws UsernameNotFoundException {
         UserDetails userDetails = userDetailsService.loadUserByUsername(this.getPk(token));
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
@@ -95,7 +95,7 @@ public class JwtTokenProvider {
      * ExpiredJwtException – if the specified JWT is a Claims JWT and the Claims has an expiration time before the time this method is invoked.
      * IllegalArgumentException – if the claimsJws string is null or empty or only whitespace
      */
-    public boolean validateToken(HttpServletRequest request, String jwtToken) throws RuntimeException {
+    public boolean validateToken(String jwtToken) throws RuntimeException {
         try {
             Jwts.parser().setSigningKey(secretKey).parseClaimsJws(jwtToken);
             return true;

@@ -43,7 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // 토큰 기반 인증이므로
                 .and()
                 .authorizeRequests()
-                .antMatchers("/user/totp/**").hasAnyRole("MANAGER")
+                .antMatchers("/user/login").permitAll()
+//                .antMatchers("/user/*").hasAnyAuthority("USER", "MANAGER")
                 .antMatchers("/**").permitAll()
                 .and()
                 .cors()

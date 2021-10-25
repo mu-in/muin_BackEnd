@@ -28,18 +28,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = ((HttpServletRequest) request).getRequestURI();
 
-        if (!path.equals("/user/login")) {
+        if (!path.equals("/user/login") && !path.equals("/user/qrcode")) {
             // 헤더에서 jwt를 읽어온다.
                 String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
                 //유효한 토큰인지 확인
-                if (token != null && jwtTokenProvider.validateToken(request, token)) {
+                if (token != null && jwtTokenProvider.validateToken(token)) {
                     // 토큰이 유효하면 토큰에서 유저 정보를 받아온다.
-                    Authentication authentication = jwtTokenProvider.getAuthentication(request, token);
-                    // SecurityContext에 Authentication 객체를 저장
+                    Authentication authentication = jwtTokenProvider.getAuthentication(token);
+                    // SecurityContext에 Authentication 객체를 저장 (getAuthentication()시 jwt에 따라 값을 가져온다)
                     SecurityContextHolder.getContext().setAuthentication(authentication);
                 }
-
         }
         filterChain.doFilter(request, response);
     }
