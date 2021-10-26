@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -23,12 +22,13 @@ import java.io.IOException;
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtTokenProvider jwtTokenProvider;
+    private final String[] exceptPath= {"/user/login", "/user/qrcode"};
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = ((HttpServletRequest) request).getRequestURI();
 
-        if (!path.equals("/user/login") && !path.equals("/user/qrcode")) {
+        if (isPathExcepted(path)) {
             // 헤더에서 jwt를 읽어온다.
                 String token = jwtTokenProvider.resolveToken((HttpServletRequest) request);
 
@@ -41,5 +41,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
         }
         filterChain.doFilter(request, response);
+    }
+
+    private boolean isPathExcepted(String target){
+        for(String path: exceptPath){
+            if(target.equals(path)) return false;
+        }
+        return true;
     }
 }
