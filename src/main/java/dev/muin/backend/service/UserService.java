@@ -17,7 +17,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 import java.util.UUID;
+import java.util.regex.PatternSyntaxException;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -27,6 +29,8 @@ public class UserService {
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final short QR_VALID_TIME = 30000; //30sec
+    private final String QR_SEPARATOR = ":";
 
     @Transactional(readOnly = true)
     public LoginResponse saveOrUpdate(LoginRequest loginRequest) {
@@ -61,7 +65,7 @@ public class UserService {
             throws UsernameNotFoundException, IllegalArgumentException {
         User member = userRepository.findByUuid(addManagerRoleRequest.getUserUuid())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
-        if(isSameUserAsJwt(request, member.getEmail()) == false){
+        if (isSameUserAsJwt(request, member.getEmail()) == false) {
             throw new IllegalArgumentException("Requested wrong user");
         }
         Store store = storeRepository.findByUuid(addManagerRoleRequest.getStoreUuid())
@@ -84,7 +88,22 @@ public class UserService {
     private boolean isSameUserAsJwt(HttpServletRequest request, String dtoEmail) {
         String jwt = jwtTokenProvider.resolveToken(request);
         String email = jwtTokenProvider.getPk(jwt);
-        if(email.equals(dtoEmail)) return true;
-        return false;
+        return email.equals(dtoEmail);
+    }
+
+    public boolean QRauthentication(String seed) throws IllegalArgumentException {
+        Date now = new Date();
+        Long serverMilli = now.getTime();
+        Long deadline;
+        try {
+            String[] seq = seed.split(QR_SEPARATOR);
+            deadline = Long.parseLong(seq[0]) + QR_VALID_TIME;
+        } catch (PatternSyntaxException e) {
+            throw new IllegalArgumentException("Separator of the value is not exist or invalid");
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Format of the value is invalid");
+        }
+        log.info(String.format("deadline: %d, serverMilli: %d", deadline, serverMilli));
+        return deadline > serverMilli;
     }
 }

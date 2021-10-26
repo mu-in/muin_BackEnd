@@ -22,8 +22,6 @@ import java.util.regex.PatternSyntaxException;
 public class UserController {
 
     private final UserService userService;
-    private final short QR_VALID_TIME = 30; //30sec
-    private final String QR_SEPARATOR = ":";
 
     /**
      * This request "url" String is used by filter
@@ -38,36 +36,20 @@ public class UserController {
     }
 
     /**
+     * This request "url" String is used by filter
+     *
      * @param seed {time}:{uuid}
+     * @see dev.muin.backend.config.jwt.JwtAuthenticationFilter
      */
     @GetMapping("/qrcode")
-    public ResponseEntity<Boolean> generateTOTP(@RequestParam @NonNull String seed) throws Exception {
-        boolean res = false;
-
-        // 서버
-        Date now = new Date();
-        Long nowMilli = now.getTime();
-        Long serverValidTime = nowMilli / QR_VALID_TIME;
-
-        String[] seq = null;
-        Long reqTimeMilli;
-        try {
-            seq = seed.split(QR_SEPARATOR);
-            reqTimeMilli = Long.parseLong(seq[0]);
-        } catch (PatternSyntaxException e) {
-            throw new IllegalArgumentException("Separator of the value is not exist or invalid");
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("Format of the value is invalid");
-        }
-        Long clientValidTime = reqTimeMilli / QR_VALID_TIME;
-
-        if (serverValidTime == clientValidTime) res = true;
-
+    public ResponseEntity<Boolean> QRauthentication(@RequestParam @NonNull String seed) throws Exception {
+        boolean res = userService.QRauthentication(seed);
         return ResponseEntity.ok(res);
     }
 
     @PostMapping("/auth/store")
-    public ResponseEntity<String> authenticateManager(HttpServletRequest request, @RequestBody AddManagerRoleRequest addManagerRoleRequest) {
+    public ResponseEntity<String> authenticateManager(
+            HttpServletRequest request, @RequestBody AddManagerRoleRequest addManagerRoleRequest) throws Exception{
         String res = userService.authenticateManager(request, addManagerRoleRequest);
         return ResponseEntity.ok(res);
     }
