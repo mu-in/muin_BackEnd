@@ -7,6 +7,7 @@ import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.UserController;
 import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,14 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Date;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@Slf4j
 @WebMvcTest(UserController.class)
 public class UserControllerTest {
 
@@ -33,32 +38,6 @@ public class UserControllerTest {
     AuthenticationManager authenticationManager;
 
     ObjectMapper objectMapper = new ObjectMapper();
-
-//    @DisplayName("회원가입 성공")
-//    @Test
-//    public void join() throws Exception {
-//        JoinRequest joinRequest = new JoinRequest("uuid", "kim@gmail.com","kim", "1111");
-//
-//        given(userService.join(joinRequest)).willReturn((short) 1);
-//
-//        mvc.perform(post("/user/join")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(objectMapper.writeValueAsString(joinRequest)))
-//                .andExpect(status().isOk());
-//    }
-
-//    @DisplayName("회원가입 email 형식 오류")
-//    @Test
-//    public void join2() throws Exception {
-//        JoinRequest joinRequest = new JoinRequest("uuidexample","kimgmailcom","kim", "1111");
-//
-//        given(userService.join(joinRequest)).willThrow();
-//
-//        mvc.perform(post("/user/join")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(objectMapper.writeValueAsString(joinRequest)))
-//                .andExpect(status().isOk());
-//    }
 
     @DisplayName("로그인 및 회원가입 성공")
     @Test
