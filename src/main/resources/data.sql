@@ -21,4 +21,16 @@ insert into store_keyword(store_id, keywords) value(6, 'DISPOSABLES');
 insert into store_keyword(store_id, keywords) value(7, 'RAMEN');
 insert into store_keyword(store_id, keywords) value(8, 'RAMEN');
 insert into store_keyword(store_id, keywords) value(9, 'RAMEN');
-
+insert into stock( quantity, store_id, product_id) value(100, 1, 1);
+insert into stock( quantity, store_id, product_id) value(100, 1, 2);
+insert into stock( quantity, store_id, product_id) value(100, 1, 3);
+insert into stock( quantity, store_id, product_id) value(100, 2, 1);
+insert into stock( quantity, store_id, product_id) value(100, 2, 2);
+insert into stock( quantity, store_id, product_id) value(100, 2, 3);
+insert into stock( quantity, store_id, product_id) value(100, 3, 11);
+insert into stock( quantity, store_id, product_id) value(100, 4, 22);
+insert into stock( quantity, store_id, product_id) value(100, 5, 33);
+insert into stock( quantity, store_id, product_id) value(100, 6, 44);
+insert into stock( quantity, store_id, product_id) value(100, 7, 55);
+insert into stock( quantity, store_id, product_id) value(100, 8, 66);
+insert into stock( quantity, store_id, product_id) value(100, 9, 77);

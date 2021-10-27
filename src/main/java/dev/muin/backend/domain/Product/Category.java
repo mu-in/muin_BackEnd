@@ -7,9 +7,15 @@ package dev.muin.backend.domain.Product;
  * @since 2021-09-20
  */
 public enum Category {
-    SNACK("과자"),
+    NOODLE("면류"),
+    HMR("상온HMR"),
+    DAILY_NECESSITY("생활용품"),
+    SAUCE("소스"),
+    DAIRY_PRODUCT("유제품"),
     DRINKS("음료"),
-    RAMEN("라면");
+    QUASI_DRUG("의약외품"),
+    ALCOHOL("주류"),
+    CAFFEINE("커피차");
 
     private String name;
 
