@@ -1,5 +1,15 @@
 package dev.muin.backend.web;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
 import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.request.AddManagerRoleRequest;
 import dev.muin.backend.web.request.LoginRequest;
@@ -7,12 +17,6 @@ import dev.muin.backend.web.response.LoginResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.regex.PatternSyntaxException;
 
 
 @Slf4j
