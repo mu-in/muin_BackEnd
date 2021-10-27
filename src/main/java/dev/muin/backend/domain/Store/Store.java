@@ -1,5 +1,6 @@
 package dev.muin.backend.domain.Store;
 
+import dev.muin.backend.domain.Payment.Payment;
 import dev.muin.backend.domain.Sales.Sales;
 import dev.muin.backend.domain.Stock.Stock;
 import dev.muin.backend.domain.User.User;
@@ -46,6 +47,9 @@ public class Store {
 
     @OneToMany(mappedBy = "store")
     private List<Stock> stocks;
+
+    @OneToMany(mappedBy = "store")
+    private List<Payment> payments;
 
     public void updateUser(@NonNull User user) {
         this.user = user;
