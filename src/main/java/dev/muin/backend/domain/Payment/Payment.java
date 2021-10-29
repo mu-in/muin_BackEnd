@@ -1,6 +1,7 @@
 package dev.muin.backend.domain.Payment;
 
 import dev.muin.backend.domain.Stock.Stock;
+import dev.muin.backend.domain.Store.Store;
 import dev.muin.backend.domain.User.User;
 import lombok.Getter;
 
@@ -26,6 +27,6 @@ public class Payment {
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
+    @JoinColumn(name = "store_id")
+    private Store store;
 }

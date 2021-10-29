@@ -9,4 +9,5 @@ import javax.persistence.Embeddable;
 public class Location {
     private double latitude;
     private double longitude;
+    private String address;
 }

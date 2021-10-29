@@ -14,6 +14,7 @@ public class NearbyStoreResponseDto {
     private String storeUuid;
     private String name;
     private double distance; // 매사거리
+    private String address;
     private String managerName;
 
     public NearbyStoreResponseDto(Object[] ob) {
@@ -22,6 +23,7 @@ public class NearbyStoreResponseDto {
             this.storeUuid = store.getUuid();
             this.name = store.getName();
             this.distance = (double) ob[1];
+            this.address = store.getLocation().getAddress();
             if(store.getUser()!=null) this.managerName = store.getUser().getName();
         } catch (Exception e) {
             e.printStackTrace();
