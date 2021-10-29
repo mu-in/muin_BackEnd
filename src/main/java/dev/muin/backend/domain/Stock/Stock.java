@@ -21,9 +21,6 @@ public class Stock {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToMany(mappedBy = "stock")
-    private List<Payment> payments;
-
     /**
      * Unique value at a series of same "store_id"
      */
