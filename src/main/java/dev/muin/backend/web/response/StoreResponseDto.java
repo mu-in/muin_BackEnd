@@ -1,6 +1,6 @@
 package dev.muin.backend.web.response;
 
-import dev.muin.backend.domain.Stock.Stock;
+import dev.muin.backend.domain.Store.Keyword;
 import dev.muin.backend.domain.Store.Store;
 import lombok.Getter;
 
@@ -10,17 +10,20 @@ import java.util.stream.Collectors;
 @Getter
 public class StoreResponseDto {
     private String name;
-    private List<String> keywords;
     private String address;
-    private List<Stock> stocks;
+    private List<String> keywords;
+    private List<StockResponseDto> stocks;
 
     public StoreResponseDto(Store store) {
         this.name = store.getName();
-        this.keywords = store.getKeywords().stream()
-                .map(keyword -> keyword.name())
-                .collect(Collectors.toList()); // TODO: 잘 가져오는지 확인
         this.address = store.getLocation().getAddress();
-        this.stocks = store.getStocks();
+        this.keywords = store.getKeywords().stream()
+                .map(Keyword::getName)
+                .collect(Collectors.toList()); // TODO: 잘 가져오는지 확인
+        this.stocks = store.getStocks()
+                .stream()
+                .map(StockResponseDto::new)
+                .collect(Collectors.toList());
     }
 
 }

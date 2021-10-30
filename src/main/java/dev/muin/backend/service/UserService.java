@@ -28,6 +28,7 @@ import java.util.regex.PatternSyntaxException;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final StoreRepository storeRepository;
     private final StoreUUIDRepository storeUUIDRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final short QR_VALID_TIME = 30000; //30sec
@@ -72,10 +73,12 @@ public class UserService {
             throw new IllegalArgumentException("Requested wrong user");
         }
         // StoreUuid validation
-        Store store = validateAndGetStoreByStoreUUID(addManagerRoleRequest.getStoreUuid(), member);
+        StoreUUID sId = validateAndGetStoreUUID(addManagerRoleRequest.getStoreUuid(), member);
 
-        store.updateUser(member);
+        // Save Store, update manager, update role
+        Store store = addManagerRoleRequest.toEntity(member, sId);
         member.updateToManager();
+        storeRepository.save(store);
         return String.format("Certified as a manager of %s", store.getName());
     }
 
@@ -85,21 +88,24 @@ public class UserService {
         return email.equals(dtoEmail);
     }
 
-    private Store validateAndGetStoreByStoreUUID(String storeUuid, User member) throws IllegalArgumentException{
+    /**
+     * Throw an exception when the store is already registered.
+     * @throws IllegalArgumentException
+     */
+    private StoreUUID validateAndGetStoreUUID(String storeUuid, User member) throws IllegalArgumentException{
         // is exist storeUUID
         StoreUUID sId = storeUUIDRepository.findById(storeUuid).orElse(null);
         if (sId == null) return null;
 
         // is already registered storeUUID
         Store store = sId.getStore();
-        if (store != null) throw new IllegalArgumentException("Serial number is not valid");
-        if(store.getUser() != null){
-            if (store.getUser().equals(member)) {
-                throw new IllegalArgumentException("You are already certified as a manager");
+        if(store != null){
+            if (store.getManager().equals(member)) {
+                throw new IllegalArgumentException("You are already certified this store");
             }
-            throw new IllegalArgumentException("Requested store is already owned by other user");
+            throw new IllegalArgumentException("Already used serial number");
         }
-        return sId.getStore();
+        return sId;
     }
 
     public boolean QRauthentication(String seed) throws IllegalArgumentException {

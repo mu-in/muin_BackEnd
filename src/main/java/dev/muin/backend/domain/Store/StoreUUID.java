@@ -11,7 +11,6 @@ import java.util.UUID;
 @Getter
 @Entity
 public class StoreUUID {
-
     @Id
     @Column(length = 40, name="uuid_id")
     private String uuid = UUID.randomUUID().toString();

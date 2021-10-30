@@ -1,5 +1,6 @@
 package dev.muin.backend.web;
 
+import dev.muin.backend.domain.Product.ProductRepository;
 import dev.muin.backend.service.StoreService;
 import dev.muin.backend.web.response.NearbyStoresResponseDto;
 import dev.muin.backend.web.response.StoreResponseDto;
