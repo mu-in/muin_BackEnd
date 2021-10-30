@@ -3,10 +3,11 @@ package dev.muin.backend.service;
 import dev.muin.backend.config.jwt.JwtTokenProvider;
 import dev.muin.backend.domain.Store.Store;
 import dev.muin.backend.domain.Store.StoreRepository;
+import dev.muin.backend.domain.Store.StoreUUID;
+import dev.muin.backend.domain.Store.StoreUUIDRepository;
 import dev.muin.backend.domain.User.Role;
 import dev.muin.backend.domain.User.User;
 import dev.muin.backend.domain.User.UserRepository;
-import dev.muin.backend.service.util.UserUtil;
 import dev.muin.backend.web.request.AddManagerRoleRequest;
 import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
@@ -27,7 +28,7 @@ import java.util.regex.PatternSyntaxException;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final StoreRepository storeRepository;
+    private final StoreUUIDRepository storeUUIDRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final short QR_VALID_TIME = 30000; //30sec
     private final String QR_SEPARATOR = ":";
@@ -57,28 +58,21 @@ public class UserService {
     /**
      * Add a "Manager" Role to user. Assume that the store is already registered.
      * Fail Conditions:
-     * 1. Invalid storeUuid or Invalid userUuid
+     * 1. Invalid userUuid
+     * 2. Invalid storeUuid
      * 2. Already exist of store's manager(by you or the other)
      */
     @Transactional
     public String authenticateManager(HttpServletRequest request, AddManagerRoleRequest addManagerRoleRequest)
             throws UsernameNotFoundException, IllegalArgumentException {
+        // User validation
         User member = userRepository.findByUuid(addManagerRoleRequest.getUserUuid())
                 .orElseThrow(() -> new UsernameNotFoundException("User Not Found"));
         if (isSameUserAsJwt(request, member.getEmail()) == false) {
             throw new IllegalArgumentException("Requested wrong user");
         }
-        Store store = storeRepository.findByUuid(addManagerRoleRequest.getStoreUuid())
-                .orElseThrow(() -> new NullPointerException("Store Not Found"));
-        if (!UserUtil.isLocationValid(addManagerRoleRequest, store.getLocation())) {
-            throw new IllegalArgumentException("Requested store is not valid");
-        }
-        if (store.getUser() != null) {
-            if (store.getUser().equals(member)) {
-                throw new IllegalArgumentException("You are already certified as a manager");
-            }
-            throw new IllegalArgumentException("Requested store is already owned by other user");
-        }
+        // StoreUuid validation
+        Store store = validateAndGetStoreByStoreUUID(addManagerRoleRequest.getStoreUuid(), member);
 
         store.updateUser(member);
         member.updateToManager();
@@ -89,6 +83,23 @@ public class UserService {
         String jwt = jwtTokenProvider.resolveToken(request);
         String email = jwtTokenProvider.getPk(jwt);
         return email.equals(dtoEmail);
+    }
+
+    private Store validateAndGetStoreByStoreUUID(String storeUuid, User member) throws IllegalArgumentException{
+        // is exist storeUUID
+        StoreUUID sId = storeUUIDRepository.findById(storeUuid).orElse(null);
+        if (sId == null) return null;
+
+        // is already registered storeUUID
+        Store store = sId.getStore();
+        if (store != null) throw new IllegalArgumentException("Serial number is not valid");
+        if(store.getUser() != null){
+            if (store.getUser().equals(member)) {
+                throw new IllegalArgumentException("You are already certified as a manager");
+            }
+            throw new IllegalArgumentException("Requested store is already owned by other user");
+        }
+        return sId.getStore();
     }
 
     public boolean QRauthentication(String seed) throws IllegalArgumentException {

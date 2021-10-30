@@ -19,9 +19,6 @@ public class Store {
     @Column(name="store_id")
     private short id;
 
-    @Column(length = 40, unique = true)
-    private String uuid;
-
     @Column(length=20)
     private String name;
 
@@ -36,6 +33,10 @@ public class Store {
     @Enumerated(EnumType.STRING)
     @Column(length = 15)
     private List<Keyword> keywords;
+
+    @OneToOne
+    @JoinColumn(name="uuid_id")
+    private StoreUUID uuid;
 
     @OneToOne
     @JoinColumn(name = "sales_id")
