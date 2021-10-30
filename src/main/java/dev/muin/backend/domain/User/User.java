@@ -44,7 +44,7 @@ public class User implements UserDetails {
     @Column(length = 10)
     private Role role;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "manager")
     private List<Store> stores;
 
     @OneToMany(mappedBy = "user")

@@ -4,13 +4,16 @@ import dev.muin.backend.domain.Payment.Payment;
 import dev.muin.backend.domain.Sales.Sales;
 import dev.muin.backend.domain.Stock.Stock;
 import dev.muin.backend.domain.User.User;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
-
+@NoArgsConstructor
 @Getter
 @Entity
 public class Store {
@@ -18,9 +21,6 @@ public class Store {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="store_id")
     private short id;
-
-    @Column(length = 40, unique = true)
-    private String uuid;
 
     @Column(length=20)
     private String name;
@@ -38,12 +38,16 @@ public class Store {
     private List<Keyword> keywords;
 
     @OneToOne
+    @JoinColumn(name="uuid_id")
+    private StoreUUID uuid;
+
+    @OneToOne
     @JoinColumn(name = "sales_id")
     private Sales sales;
 
     @ManyToOne
     @JoinColumn(name="user_id")
-    private User user;
+    private User manager;
 
     @OneToMany(mappedBy = "store")
     private List<Stock> stocks;
@@ -51,9 +55,21 @@ public class Store {
     @OneToMany(mappedBy = "store")
     private List<Payment> payments;
 
-    public void updateUser(@NonNull User user) {
-        this.user = user;
-        user.getStores().add(this);
+    public void updateManger(@NonNull User manager) {
+        this.manager = manager;
+        manager.getStores().add(this);
+    }
+
+    @Builder
+    public Store(String name, User manager, Location location,List<String> keywords, StoreUUID storeUuid){
+        this.name = name;
+        this.location = location;
+        this.keywords = keywords.stream()
+                .map(Keyword::fromString)
+                .collect(Collectors.toList());
+        this.manager = manager;
+        manager.getStores().add(this);
+        this.uuid = storeUuid;
     }
 
     @Override
@@ -65,7 +81,7 @@ public class Store {
                 ", location=" + location +
                 ", keywords=" + keywords +
                 ", sales=" + sales +
-                ", user=" + user +
+                ", user=" + manager +
                 ", stocks=" + stocks +
                 '}';
     }

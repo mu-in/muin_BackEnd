@@ -1,12 +1,16 @@
 package dev.muin.backend.domain.Product;
 
+import lombok.Getter;
+
 /**
  * <h1>Category</h1>
  * 상품의 대분류입니다. (추후 추가 예정)
  *
  * @since 2021-09-20
  */
+@Getter
 public enum Category {
+    SNACK("과자"),
     NOODLE("면류"),
     HMR("상온HMR"),
     DAILY_NECESSITY("생활용품"),
