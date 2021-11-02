@@ -61,12 +61,10 @@ public class Store {
     }
 
     @Builder
-    public Store(String name, User manager, Location location,List<String> keywords, StoreUUID storeUuid){
+    public Store(String name, User manager, Location location,List<Keyword> keywords, StoreUUID storeUuid){
         this.name = name;
         this.location = location;
-        this.keywords = keywords.stream()
-                .map(Keyword::fromString)
-                .collect(Collectors.toList());
+        this.keywords = keywords;
         this.manager = manager;
         manager.getStores().add(this);
         this.uuid = storeUuid;

@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @NoArgsConstructor
 @Setter
@@ -27,11 +28,13 @@ public class AddManagerRoleRequest {
     @NonNull
     private String storeUuid;
 
-    public Store toEntity(User member, StoreUUID storeUUID) {
+    public Store toStoreEntity(User member, StoreUUID storeUUID) {
         return Store.builder()
                 .name(storeName)
                 .location(new Location(storeLat, storeLon, address))
-                .keywords(keywords)
+                .keywords(keywords.stream()
+                        .map(Keyword::fromString)
+                        .collect(Collectors.toList()))
                 .manager(member)
                 .storeUuid(storeUUID)
                 .build();
