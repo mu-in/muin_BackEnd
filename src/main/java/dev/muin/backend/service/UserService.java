@@ -74,9 +74,10 @@ public class UserService {
         }
         // StoreUuid validation
         StoreUUID sId = validateAndGetStoreUUID(addManagerRoleRequest.getStoreUuid(), member);
+        if(sId == null) throw new NullPointerException("Store UUID is not offered value");
 
         // Save Store, update manager, update role
-        Store store = addManagerRoleRequest.toEntity(member, sId);
+        Store store = addManagerRoleRequest.toStoreEntity(member, sId);
         member.updateToManager();
         storeRepository.save(store);
         return String.format("Certified as a manager of %s", store.getName());
