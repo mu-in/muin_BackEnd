@@ -18,6 +18,9 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.HashMap;
+import java.util.Map;
+
 
 @Slf4j
 @RequiredArgsConstructor
@@ -52,9 +55,11 @@ public class UserController {
     }
 
     @PostMapping("/auth/store")
-    public ResponseEntity<String> authenticateManager(
+    public ResponseEntity<Map<String, Boolean>> authenticateManager(
             HttpServletRequest request, @RequestBody AddManagerRoleRequest addManagerRoleRequest) throws Exception{
-        String res = userService.authenticateManager(request, addManagerRoleRequest);
-        return ResponseEntity.ok(res);
+        boolean res = userService.authenticateManager(request, addManagerRoleRequest);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("validation",res);
+        return ResponseEntity.ok(response);
     }
 }

@@ -18,7 +18,7 @@ public enum Keyword {
 
     public static Keyword fromString(String target) throws IllegalArgumentException{
         for(Keyword keyword: Keyword.values()) {
-            if(keyword.name.equals(target)) return keyword;
+            if(keyword.getName().equals(target)) return keyword;
         }
         throw new IllegalArgumentException("No enum constant: " + target);
     }
