@@ -64,7 +64,7 @@ public class UserService {
      * 2. Already exist of store's manager(by you or the other)
      */
     @Transactional
-    public String authenticateManager(HttpServletRequest request, AddManagerRoleRequest addManagerRoleRequest)
+    public boolean authenticateManager(HttpServletRequest request, AddManagerRoleRequest addManagerRoleRequest)
             throws UsernameNotFoundException, IllegalArgumentException {
         // User validation
         User member = userRepository.findByUuid(addManagerRoleRequest.getUserUuid())
@@ -80,7 +80,7 @@ public class UserService {
         Store store = addManagerRoleRequest.toStoreEntity(member, sId);
         member.updateToManager();
         storeRepository.save(store);
-        return String.format("Certified as a manager of %s", store.getName());
+        return true;
     }
 
     private boolean isSameUserAsJwt(HttpServletRequest request, String dtoEmail) {
