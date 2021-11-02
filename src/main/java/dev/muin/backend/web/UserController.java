@@ -49,9 +49,11 @@ public class UserController {
      * @see dev.muin.backend.config.jwt.JwtAuthenticationFilter
      */
     @GetMapping("/qrcode")
-    public ResponseEntity<Boolean> QRauthentication(@RequestParam @NonNull String seed) throws Exception {
+    public ResponseEntity<Map<String, Boolean>> QRauthentication(@RequestParam @NonNull String seed) throws Exception {
         boolean res = userService.QRauthentication(seed);
-        return ResponseEntity.ok(res);
+        Map<String, Boolean> response = new HashMap<>();
+        response.put("validation",res);
+        return ResponseEntity.ok(response);
     }
 
     @PostMapping("/auth/store")
