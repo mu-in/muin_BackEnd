@@ -18,7 +18,7 @@ insert into storeuuid(uuid_id) value ('iaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa'
 insert into storeuuid(uuid_id) value ('jaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
 -- serial_number for test
 insert into storeuuid(uuid_id) value ('xaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
-insert into storeuuid(uuid_id) value ('yaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
+insert into storeuuid(uuid_id) value ('yaaaaaaaaaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
 insert into storeuuid(uuid_id) value ('zaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
 insert into storeuuid(uuid_id) value ('uaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
 insert into storeuuid(uuid_id) value ('paaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
