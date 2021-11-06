@@ -21,11 +21,16 @@ insert into storeuuid(uuid_id) value ('haaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa'
 insert into storeuuid(uuid_id) value ('iaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
 insert into storeuuid(uuid_id) value ('jaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
 -- serial_number for test
-insert into storeuuid(uuid_id) value ('xaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
-insert into storeuuid(uuid_id) value ('yaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
-insert into storeuuid(uuid_id) value ('zaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
-insert into storeuuid(uuid_id) value ('uaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
-insert into storeuuid(uuid_id) value ('paaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa');
+insert into storeuuid(uuid_id) value ('test-serial-1');
+insert into storeuuid(uuid_id) value ('test-serial-2');
+insert into storeuuid(uuid_id) value ('test-serial-3');
+insert into storeuuid(uuid_id) value ('test-serial-4');
+insert into storeuuid(uuid_id) value ('test-serial-5');
+insert into storeuuid(uuid_id) value ('test-serial-6');
+insert into storeuuid(uuid_id) value ('test-serial-7');
+insert into storeuuid(uuid_id) value ('test-serial-8');
+insert into storeuuid(uuid_id) value ('test-serial-9');
+insert into storeuuid(uuid_id) value ('test-serial-10');
 -- store
 insert into store(store_id, uuid_id, name, latitude, longitude, address, user_id)
     value (1, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '민주어린이집_500m',
