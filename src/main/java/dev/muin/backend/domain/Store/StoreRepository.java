@@ -1,5 +1,6 @@
 package dev.muin.backend.domain.Store;
 
+import dev.muin.backend.web.response.MyStoreResponseDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,4 +26,7 @@ public interface StoreRepository extends JpaRepository<Store, Short> {
                                         @Param("distance") double distance);
 
     Optional<Store> findByUuid(String uuid);
+
+    @Query("SELECT new dev.muin.backend.web.response.MyStoreResponseDto(s) FROM Store s WHERE s.manager.id=:userId")
+    List<MyStoreResponseDto> findByUserId(@Param("userId") Short userId);
 }
