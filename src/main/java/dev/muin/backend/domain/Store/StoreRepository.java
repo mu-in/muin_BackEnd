@@ -9,7 +9,11 @@ import java.util.Optional;
 
 public interface StoreRepository extends JpaRepository<Store, Short> {
 
-    String HAVERSINE = "(6371 * acos(cos(radians(:userLat)) * cos(radians(s.location.latitude)) * cos(radians(s.location.longitude) - radians(:userLon)) + sin(radians(:userLat)) * sin(radians(s.location.latitude))))";
+    String HAVERSINE = "(6371 * acos(cos(radians(:userLat)) " +
+            "* cos(radians(s.location.latitude)) " +
+            "* cos(radians(s.location.longitude) - radians(:userLon)) " +
+            "+ sin(radians(:userLat)) " +
+            "* sin(radians(s.location.latitude))))";
 
     // TODO SQL에선 ORDER BY를 제외하곤 alias 사용 못 함. => 서브 쿼리 사용해볼 수 있음
     // JPQL SELECT 구문 빨간줄 오류 아님
