@@ -25,8 +25,6 @@ public class ManagerService {
     private final UserRepository userRepository;
     private final StoreRepository storeRepository;
     private final StockRepository stockRepository;
-    private final JwtTokenProvider jwtTokenProvider;
-
 
     @Transactional(readOnly = true)
     public List<MyStoreResponseDto> getMyStores(String userUuid) {
@@ -46,5 +44,11 @@ public class ManagerService {
         return new AllStocksPerStoreResponse(storeId, catRes);
     }
 
+    @Transactional
+    public String updateStock(Short storeId, int stockId, int quantity) throws IllegalArgumentException{
+        if(quantity<0) throw new IllegalArgumentException("Cannot set under zero(0)");
+        stockRepository.updateStock(storeId, stockId, quantity);
+        return "success";
+    }
 
 }
