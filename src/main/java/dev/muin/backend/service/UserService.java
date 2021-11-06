@@ -39,6 +39,7 @@ public class UserService {
         User member = userRepository.findByEmail(loginRequest.getEmail())
                 .orElse(null);
         if (member == null) member = join(loginRequest);
+        // TODO 구글 api에서 유효한 회원인지 확인, 유효하면 정보 업데이트
         String jwt = jwtTokenProvider.createToken(member.getEmail());
         return new LoginResponse(jwt, member.getUuid(), member.getRole());
     }

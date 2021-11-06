@@ -1,12 +1,10 @@
 package dev.muin.backend.domain.Stock;
 
-import dev.muin.backend.domain.Payment.Payment;
 import dev.muin.backend.domain.Product.Product;
 import dev.muin.backend.domain.Store.Store;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Getter
 @Entity
