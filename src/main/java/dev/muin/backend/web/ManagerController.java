@@ -20,9 +20,9 @@ public class ManagerController {
 
     private final ManagerService managerService;
 
-    @GetMapping("/manager/{userId}")
-    public ResponseEntity<List<MyStoreResponseDto>> getMyStore(@PathVariable Short userId) {
-        List<MyStoreResponseDto> myStores = managerService.getMyStores(userId);
+    @GetMapping("/manager/{userUuid}")
+    public ResponseEntity<List<MyStoreResponseDto>> getMyStore(@PathVariable("userUuid") String userUuid) {
+        List<MyStoreResponseDto> myStores = managerService.getMyStores(userUuid);
         return ResponseEntity.ok(myStores);
     }
 }

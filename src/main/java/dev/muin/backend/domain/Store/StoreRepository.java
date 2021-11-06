@@ -27,6 +27,6 @@ public interface StoreRepository extends JpaRepository<Store, Short> {
 
     Optional<Store> findByUuid(String uuid);
 
-    @Query("SELECT new dev.muin.backend.web.response.MyStoreResponseDto(s) FROM Store s WHERE s.manager.id=:userId")
-    List<MyStoreResponseDto> findByUserId(@Param("userId") Short userId);
+    @Query("SELECT new dev.muin.backend.web.response.MyStoreResponseDto(s) FROM Store s WHERE s.manager.uuid=:userUuid")
+    List<MyStoreResponseDto> findByUserId(@Param("userUuid") String userUuid);
 }

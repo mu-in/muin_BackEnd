@@ -19,8 +19,8 @@ public class ManagerService {
     private final StoreRepository storeRepository;
 
     @Transactional(readOnly = true)
-    public List<MyStoreResponseDto> getMyStores(Short userID) {
-        List<MyStoreResponseDto> res = storeRepository.findByUserId(userID);
+    public List<MyStoreResponseDto> getMyStores(String userUuid) {
+        List<MyStoreResponseDto> res = storeRepository.findByUserId(userUuid);
         return res;
     }
 }
