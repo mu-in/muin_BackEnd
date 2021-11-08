@@ -7,14 +7,17 @@ import lombok.Getter;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @see /store/{storeId}
+ */
 @Getter
-public class StoreResponseDto {
+public class StoreForUserResponse {
     private String name;
     private String address;
     private List<String> keywords;
-    private List<StockResponseDto> stocks;
+    private List<StockForUserResponse> stocks;
 
-    public StoreResponseDto(Store store) {
+    public StoreForUserResponse(Store store) {
         this.name = store.getName();
         this.address = store.getLocation().getAddress();
         this.keywords = store.getKeywords().stream()
@@ -22,7 +25,7 @@ public class StoreResponseDto {
                 .collect(Collectors.toList()); // TODO: 잘 가져오는지 확인
         this.stocks = store.getStocks()
                 .stream()
-                .map(StockResponseDto::new)
+                .map(StockForUserResponse::new)
                 .collect(Collectors.toList());
     }
 

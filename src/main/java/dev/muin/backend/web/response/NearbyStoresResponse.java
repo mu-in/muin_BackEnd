@@ -10,13 +10,13 @@ import lombok.extern.slf4j.Slf4j;
 @NoArgsConstructor
 @Setter
 @Getter
-public class NearbyStoresResponseDto {
+public class NearbyStoresResponse {
     private short id;
     private String name;
     private double distance; // 매사거리
     private String address;
 
-    public NearbyStoresResponseDto(Object[] ob) {
+    public NearbyStoresResponse(Object[] ob) {
         try {
             Store store = (Store) ob[0];
             this.id = store.getId();

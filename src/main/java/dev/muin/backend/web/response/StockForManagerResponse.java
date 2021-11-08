@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor
 @Getter
-public class StocksResponse {
+public class StockForManagerResponse {
     private int id;       //재고 pk
     private String name;    //상품 이름
     private int quantity;  //재고 수량
@@ -17,7 +17,7 @@ public class StocksResponse {
     @JsonIgnore
     private Category category;
 
-    public StocksResponse(Stock stock){
+    public StockForManagerResponse(Stock stock){
         this.id =stock.getId();
         this.name = stock.getProduct().getName();
         this.quantity = stock.getQuantity();

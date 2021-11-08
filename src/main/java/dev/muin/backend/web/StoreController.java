@@ -1,9 +1,8 @@
 package dev.muin.backend.web;
 
-import dev.muin.backend.domain.Product.ProductRepository;
 import dev.muin.backend.service.StoreService;
-import dev.muin.backend.web.response.NearbyStoresResponseDto;
-import dev.muin.backend.web.response.StoreResponseDto;
+import dev.muin.backend.web.response.NearbyStoresResponse;
+import dev.muin.backend.web.response.StoreForUserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -22,15 +21,18 @@ public class StoreController {
 	private final StoreService storeService;
 
 	@GetMapping("/stores/location")
-	public ResponseEntity<List<NearbyStoresResponseDto>> getNearbyStores(@RequestParam double lat,
-																		 @RequestParam double lon, @RequestParam double distance) {
-		List<NearbyStoresResponseDto> res = storeService.getNearbyStores(lat, lon, distance);
+	public ResponseEntity<List<NearbyStoresResponse>> getNearbyStores(@RequestParam double lat,
+																	  @RequestParam double lon, @RequestParam double distance) {
+		List<NearbyStoresResponse> res = storeService.getNearbyStores(lat, lon, distance);
 		return ResponseEntity.ok(res);
 	}
 
+	/**
+	 * Get data of certain store
+	 */
 	@GetMapping("/store/{storeId}")
-	public ResponseEntity<StoreResponseDto> getStore(@PathVariable("storeId") short storeId) throws Exception{
-		StoreResponseDto res = storeService.getStore(storeId);
+	public ResponseEntity<StoreForUserResponse> getStore(@PathVariable("storeId") short storeId) throws Exception{
+		StoreForUserResponse res = storeService.getStore(storeId);
 		return ResponseEntity.ok(res);
 	}
 }

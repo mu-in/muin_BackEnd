@@ -6,15 +6,18 @@ import lombok.NoArgsConstructor;
 
 import javax.validation.constraints.NotNull;
 
+/**
+ * @see /store/{storeId}
+ */
 @NoArgsConstructor
 @Getter
-public class StockResponseDto {
+public class StockForUserResponse {
     private String category;
     private String name;
     private int price;
     private long quantity;
 
-    public StockResponseDto(@NotNull Stock stock) {
+    public StockForUserResponse(@NotNull Stock stock) {
         this.category = stock.getProduct().getCategory().getName();
         this.name = stock.getProduct().getName();
         this.price = stock.getProduct().getPrice();
