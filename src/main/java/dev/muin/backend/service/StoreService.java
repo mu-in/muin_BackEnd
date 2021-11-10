@@ -3,7 +3,7 @@ package dev.muin.backend.service;
 import dev.muin.backend.domain.Store.Store;
 import dev.muin.backend.domain.Store.StoreRepository;
 import dev.muin.backend.web.response.NearbyStoresResponse;
-import dev.muin.backend.web.response.StoreForUserResponse;
+import dev.muin.backend.web.response.StoreByUserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -33,10 +33,10 @@ public class StoreService {
     }
 
     @Transactional(readOnly = true)
-    public StoreForUserResponse getStore(short storeId) throws NullPointerException{
+    public StoreByUserResponse getStore(short storeId) throws NullPointerException{
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new NullPointerException("Store Not Found"));
-        StoreForUserResponse res = new StoreForUserResponse(store);
+        StoreByUserResponse res = new StoreByUserResponse(store);
         return res;
     }
 }

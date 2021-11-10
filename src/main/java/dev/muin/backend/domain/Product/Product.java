@@ -11,7 +11,7 @@ import java.util.List;
 public class Product {
     @Id
     @Column(name = "product_id")
-    private short id;
+    private int id;
 
     private String name;
 
