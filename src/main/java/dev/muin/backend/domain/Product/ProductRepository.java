@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ProductRepository extends JpaRepository<Product, Short> {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
     @Query("SELECT new dev.muin.backend.service.dto.StockAndProductDto(p) FROM Product p")
     List<StockAndProductDto> findAllProducts();
 }

@@ -7,8 +7,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
-public interface StockRepository extends JpaRepository<Stock, Short> {
+public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     @Query("SELECT new dev.muin.backend.service.dto.StockAndProductDto(s)  FROM Stock s WHERE s.store.id = :storeId")
     List<StockAndProductDto> findStocksByStoreId(@Param("storeId") Short storeId);
@@ -16,4 +17,8 @@ public interface StockRepository extends JpaRepository<Stock, Short> {
     @Modifying
     @Query("UPDATE Stock s SET s.quantity= :quantity WHERE s.id = :stockId AND s.store.id = :storeId")
     void updateStock(@Param("storeId") Short storeId, @Param("stockId") int stockId, @Param("quantity") Integer quantity);
+
+
+    @Query("SELECT s.store FROM Stock s WHERE s.store.id=:storeId AND s.product.id=:productId")
+    Optional<Stock> findByStoreIdAndProductId(@Param("storeId") Short storeId, @Param("productId") int productId);
 }
