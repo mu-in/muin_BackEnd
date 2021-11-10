@@ -2,7 +2,7 @@ package dev.muin.backend.web;
 
 import dev.muin.backend.service.StoreService;
 import dev.muin.backend.web.response.NearbyStoresResponse;
-import dev.muin.backend.web.response.StoreForUserResponse;
+import dev.muin.backend.web.response.StoreByUserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -31,8 +31,8 @@ public class StoreController {
 	 * Get data of certain store
 	 */
 	@GetMapping("/store/{storeId}")
-	public ResponseEntity<StoreForUserResponse> getStore(@PathVariable("storeId") short storeId) throws Exception{
-		StoreForUserResponse res = storeService.getStore(storeId);
+	public ResponseEntity<StoreByUserResponse> getStore(@PathVariable("storeId") short storeId) throws Exception{
+		StoreByUserResponse res = storeService.getStore(storeId);
 		return ResponseEntity.ok(res);
 	}
 }

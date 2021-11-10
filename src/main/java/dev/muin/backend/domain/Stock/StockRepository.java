@@ -1,6 +1,6 @@
 package dev.muin.backend.domain.Stock;
 
-import dev.muin.backend.web.response.StockForManagerResponse;
+import dev.muin.backend.service.dto.StockAndProductDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -10,8 +10,8 @@ import java.util.List;
 
 public interface StockRepository extends JpaRepository<Stock, Short> {
 
-    @Query("SELECT new dev.muin.backend.web.response.StockForManagerResponse(s)  FROM Stock s WHERE s.store.id = :storeId")
-    List<StockForManagerResponse> findStocksGroupAsCategory(@Param("storeId") Short storeId);
+    @Query("SELECT new dev.muin.backend.service.dto.StockAndProductDto(s)  FROM Stock s WHERE s.store.id = :storeId")
+    List<StockAndProductDto> findStocksByStoreId(@Param("storeId") Short storeId);
 
     @Modifying
     @Query("UPDATE Stock s SET s.quantity= :quantity WHERE s.id = :stockId AND s.store.id = :storeId")
