@@ -5,14 +5,14 @@ import lombok.Getter;
 
 
 @Getter
-public class MyStoreResponseDto {
+public class MyStoreResponse {
     
     private Short id;
     private String name;
     private String address;
     private String managerName;
 
-    public MyStoreResponseDto(Store store) {
+    public MyStoreResponse(Store store) {
         this.id = store.getId();
         this.name = store.getName();
         this.address = store.getLocation().getAddress();

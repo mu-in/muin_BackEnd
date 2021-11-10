@@ -2,8 +2,8 @@ package dev.muin.backend.service;
 
 import dev.muin.backend.domain.Store.Store;
 import dev.muin.backend.domain.Store.StoreRepository;
-import dev.muin.backend.web.response.NearbyStoresResponseDto;
-import dev.muin.backend.web.response.StoreResponseDto;
+import dev.muin.backend.web.response.NearbyStoresResponse;
+import dev.muin.backend.web.response.StoreForUserResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -23,20 +23,20 @@ public class StoreService {
      * @param distance 0.5, 1, 2(km)
      */
     @Transactional(readOnly = true)
-    public List<NearbyStoresResponseDto> getNearbyStores(double userLat, double userLon, double distance) {
+    public List<NearbyStoresResponse> getNearbyStores(double userLat, double userLon, double distance) {
         List<Object[]> res = storeRepository.findAllByDistanceASC(userLat, userLon, distance);
-        List<NearbyStoresResponseDto> result = res
+        List<NearbyStoresResponse> result = res
                 .stream()
-                .map(NearbyStoresResponseDto::new)
+                .map(NearbyStoresResponse::new)
                 .collect(Collectors.toList());
         return result;
     }
 
     @Transactional(readOnly = true)
-    public StoreResponseDto getStore(short storeId) throws NullPointerException{
+    public StoreForUserResponse getStore(short storeId) throws NullPointerException{
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new NullPointerException("Store Not Found"));
-        StoreResponseDto res = new StoreResponseDto(store);
+        StoreForUserResponse res = new StoreForUserResponse(store);
         return res;
     }
 }
