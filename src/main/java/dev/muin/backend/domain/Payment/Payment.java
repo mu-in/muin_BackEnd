@@ -1,6 +1,5 @@
 package dev.muin.backend.domain.Payment;
 
-import dev.muin.backend.domain.Stock.Stock;
 import dev.muin.backend.domain.Store.Store;
 import dev.muin.backend.domain.User.User;
 import lombok.Getter;
@@ -17,9 +16,10 @@ public class Payment {
     private int id;
 
     /**
-     * contains stock's {name, quantity, each price}, total price
+     * contains stock's [name, quantity, each price] // TODO JSON형으로 저장하자
      */
     private String buyList;
+    private int totalPrice; // TODO totalPrice 추출하는 메서드 만들기
     private LocalDateTime payTime;
 
     @ManyToOne

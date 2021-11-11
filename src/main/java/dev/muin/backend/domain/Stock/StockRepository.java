@@ -12,7 +12,12 @@ import java.util.Optional;
 public interface StockRepository extends JpaRepository<Stock, Integer> {
 
     @Query("SELECT new dev.muin.backend.service.dto.StockAndProductDto(s)  FROM Stock s WHERE s.store.id = :storeId")
-    List<StockAndProductDto> findStocksByStoreId(@Param("storeId") Short storeId);
+    List<StockAndProductDto> findByStoreId(@Param("storeId") Short storeId);
+
+    // 빨간줄 에러 아님
+    @Query("SELECT COUNT(CASE WHEN 0 < s.quantity AND s.quantity<=10 THEN 1 END), COUNT(CASE WHEN s.quantity=0 THEN 1 END) " +
+            "FROM Stock s WHERE s.store.id = :storeId")
+    List<Long[]> countStatusByStoreId(@Param("storeId") Short storeId);
 
     @Modifying
     @Query("UPDATE Stock s SET s.quantity= :quantity WHERE s.id = :stockId AND s.store.id = :storeId")

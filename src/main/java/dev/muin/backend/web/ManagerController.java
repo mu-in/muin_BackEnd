@@ -3,6 +3,7 @@ package dev.muin.backend.web;
 import dev.muin.backend.service.ManagerService;
 import dev.muin.backend.web.request.AddNewStockRequest;
 import dev.muin.backend.web.response.AllStocksPerStoreResponse;
+import dev.muin.backend.web.response.HomeResponse;
 import dev.muin.backend.web.response.MyStoreResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -55,5 +56,11 @@ public class ManagerController {
                                                                   @PathVariable("stockId") int stockId) throws Exception{
         String res = managerService.removeStockToStore(storeId, stockId);
         return ResponseEntity.ok(Map.of("result", res));
+    }
+
+    @GetMapping("/{storeId}/home")
+    public ResponseEntity<HomeResponse> getHomeData(@PathVariable("storeId") Short storeId) {
+        HomeResponse res = managerService.getHomeData(storeId);
+        return ResponseEntity.ok(res);
     }
 }

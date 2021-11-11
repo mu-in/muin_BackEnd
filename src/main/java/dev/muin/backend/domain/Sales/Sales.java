@@ -4,19 +4,21 @@ import dev.muin.backend.domain.Store.Store;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 
 @Getter
 @Entity
 public class Sales {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="sales_id")
+    @Column(name = "sales_id")
     private short id;
 
-    private short month;
+    private LocalDate month;
 
     private int sales;
 
-    @OneToOne(mappedBy="sales")
+    @ManyToOne
+    @JoinColumn(name = "store_id")
     private Store store;
 }
