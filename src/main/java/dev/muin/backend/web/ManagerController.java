@@ -1,7 +1,9 @@
 package dev.muin.backend.web;
 
 import dev.muin.backend.service.ManagerService;
+import dev.muin.backend.service.dto.RecentPaymentDto;
 import dev.muin.backend.web.request.AddNewStockRequest;
+import dev.muin.backend.web.response.AllPaymentsResponse;
 import dev.muin.backend.web.response.AllStocksPerStoreResponse;
 import dev.muin.backend.web.response.HomeResponse;
 import dev.muin.backend.web.response.MyStoreResponse;
@@ -61,6 +63,12 @@ public class ManagerController {
     @GetMapping("/{storeId}/home")
     public ResponseEntity<HomeResponse> getHomeData(@PathVariable("storeId") Short storeId) {
         HomeResponse res = managerService.getHomeData(storeId);
+        return ResponseEntity.ok(res);
+    }
+
+    @GetMapping("/{storeId}/payments")
+    public ResponseEntity<AllPaymentsResponse> getRecordOfPayments(@PathVariable("storeId")Short storeId){
+        AllPaymentsResponse res = managerService.getRecordOfPayments(storeId);
         return ResponseEntity.ok(res);
     }
 }
