@@ -59,7 +59,7 @@ public class ManagerService {
     @Transactional
     public String updateStock(Short storeId, int stockId, int quantity) throws IllegalArgumentException {
         if (quantity < 0) throw new IllegalArgumentException("Cannot set under zero(0)");
-        stockRepository.updateStock(storeId, stockId, quantity);
+        stockRepository.updateStockByManager(storeId, stockId, quantity);
         return RESPONSE_SUCCESS;
     }
 

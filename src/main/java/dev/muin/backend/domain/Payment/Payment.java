@@ -2,11 +2,14 @@ package dev.muin.backend.domain.Payment;
 
 import dev.muin.backend.domain.Store.Store;
 import dev.muin.backend.domain.User.User;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
+@NoArgsConstructor
 @Getter
 @Entity
 public class Payment {
@@ -29,4 +32,11 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
+
+    @Builder
+    public Payment(String buyList, int totalPrice, LocalDateTime payTime) {
+        this.buyList = buyList;
+        this.totalPrice = totalPrice;
+        this.payTime = payTime;
+    }
 }
