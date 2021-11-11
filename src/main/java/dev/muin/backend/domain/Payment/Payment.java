@@ -34,9 +34,11 @@ public class Payment {
     private Store store;
 
     @Builder
-    public Payment(String buyList, int totalPrice, LocalDateTime payTime) {
+    public Payment(String buyList, int totalPrice, LocalDateTime payTime, Store store, User user) {
         this.buyList = buyList;
         this.totalPrice = totalPrice;
         this.payTime = payTime;
+        this.store = store;
+        this.user = user;
     }
 }
