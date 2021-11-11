@@ -18,10 +18,10 @@ import java.util.List;
 public class Store {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="store_id")
+    @Column(name = "store_id")
     private short id;
 
-    @Column(length=20)
+    @Column(length = 20)
     private String name;
 
     @Embedded
@@ -37,15 +37,14 @@ public class Store {
     private List<Keyword> keywords;
 
     @OneToOne
-    @JoinColumn(name="uuid_id")
+    @JoinColumn(name = "uuid_id")
     private StoreUUID uuid;
 
-    @OneToOne
-    @JoinColumn(name = "sales_id")
-    private Sales sales;
+    @OneToMany(mappedBy = "store")
+    private List<Sales> sales;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User manager;
 
     @OneToMany(mappedBy = "store")
@@ -60,7 +59,7 @@ public class Store {
     }
 
     @Builder
-    public Store(String name, User manager, Location location,List<Keyword> keywords, StoreUUID storeUuid){
+    public Store(String name, User manager, Location location, List<Keyword> keywords, StoreUUID storeUuid) {
         this.name = name;
         this.location = location;
         this.keywords = keywords;

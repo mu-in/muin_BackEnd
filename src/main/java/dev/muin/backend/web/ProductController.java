@@ -1,7 +1,7 @@
 package dev.muin.backend.web;
 
 import dev.muin.backend.service.ManagerService;
-import dev.muin.backend.web.response.ProductsGroupedByCategoryDto;
+import dev.muin.backend.service.dto.ProductsGroupedByCategoryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

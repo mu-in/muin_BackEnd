@@ -2,6 +2,7 @@ package dev.muin.backend.web.response;
 
 import dev.muin.backend.domain.Product.Category;
 import dev.muin.backend.service.dto.StockAndProductDto;
+import dev.muin.backend.service.dto.StocksGroupedByCategoryDto;
 import lombok.Getter;
 
 import java.util.List;
