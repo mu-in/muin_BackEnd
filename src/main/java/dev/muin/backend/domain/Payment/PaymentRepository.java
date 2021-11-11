@@ -11,7 +11,10 @@ import java.util.List;
 public interface PaymentRepository extends JpaRepository<Payment, Short> {
 
     @Query("SELECT new dev.muin.backend.service.dto.RecentPaymentDto(p) FROM Payment p WHERE p.store.id = :storeId ORDER BY p.payTime DESC ")
-    List<RecentPaymentDto> findPaymentByOrderByPayTime(@Param("storeId") Short storeId, Pageable pageable);
+    List<RecentPaymentDto> find5PaymentByOrderByPayTime(@Param("storeId") Short storeId, Pageable pageable);
+
+    @Query("SELECT new dev.muin.backend.service.dto.RecentPaymentDto(p) FROM Payment p WHERE p.store.id = :storeId ORDER BY p.payTime DESC")
+    List<RecentPaymentDto> findAllOrderByPayTime(@Param("storeId") Short storeId);
 
     // 빨간줄 에러 아님
     @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND YEAR(p.payTime) = YEAR(CURDATE()) AND MONTH(p.payTime) = MONTH(CURDATE())")

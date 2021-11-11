@@ -11,6 +11,7 @@ import dev.muin.backend.domain.Store.Store;
 import dev.muin.backend.domain.Store.StoreRepository;
 import dev.muin.backend.service.dto.*;
 import dev.muin.backend.web.request.AddNewStockRequest;
+import dev.muin.backend.web.response.AllPaymentsResponse;
 import dev.muin.backend.web.response.AllStocksPerStoreResponse;
 import dev.muin.backend.web.response.HomeResponse;
 import dev.muin.backend.web.response.MyStoreResponse;
@@ -100,6 +101,13 @@ public class ManagerService {
     }
 
     @Transactional(readOnly = true)
+    public AllPaymentsResponse getRecordOfPayments(Short storeId){
+        storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Store Not Found"));
+        List<RecentPaymentDto> res = paymentRepository.findAllOrderByPayTime(storeId);
+        return new AllPaymentsResponse(storeId, res);
+    }
+
+    @Transactional(readOnly = true)
     public HomeResponse getHomeData(Short storeId) {
         storeRepository.findById(storeId).orElseThrow(() -> new IllegalArgumentException("Store Not Found"));
         List<RecentPaymentDto> recentPaymentDtos = getRecent5Payments(storeId);
@@ -119,7 +127,7 @@ public class ManagerService {
 
     private List<RecentPaymentDto> getRecent5Payments(Short storeId) {
         Pageable firstFiveElements = PageRequest.of(0, 5);
-        return paymentRepository.findPaymentByOrderByPayTime(storeId, firstFiveElements);
+        return paymentRepository.find5PaymentByOrderByPayTime(storeId, firstFiveElements);
     }
 
     private int getMonthlySales(Short storeId) throws NullPointerException {
