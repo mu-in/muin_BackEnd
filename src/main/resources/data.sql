@@ -6,7 +6,8 @@ load data local infile './src/main/resources/csvData/Products_Transformed.csv' i
 insert into user(user_id, email, name, role, uuid)
 values (1, 'kim@gmail.com', 'kim', 'MANAGER', 'cccccccc-cccc-cccc-cccc-cccccccccccccccc'),
        (2, 'lee@gmail.com', 'lee', 'MANAGER', 'dccccccc-cccc-cccc-cccc-cccccccccccccccc'),
-       (3, 'park@gmail.com', 'park', 'MANAGER', 'eccccccc-cccc-cccc-cccc-cccccccccccccccc');
+       (3, 'park@gmail.com', 'park', 'MANAGER', 'eccccccc-cccc-cccc-cccc-cccccccccccccccc'),
+       (4, '2kyung19@gmail.com', '이경은', 'MANAGER', '2kyung19-cccc-cccc-cccc-cccccccccccccccc');
 -- serial_number
 insert into storeuuid(uuid_id)
 values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa'),
@@ -33,23 +34,23 @@ values ('test-serial-1'),
        ('test-serial-10');
 -- store
 insert into store(store_id, uuid_id, name, latitude, longitude, address, user_id)
-values (1, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '민주어린이집_500m', 37.54475295439056, 127.06857657373725,
-        '서울 광진구 동일로26길 47', 1),
-       (2, 'baaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '쭈꾸미킹_500m', 37.543356243294255, 127.07018177829258,
-        '서울 광진구 능동로13길 39 한아름쇼핑센타 1층', 1),
-       (3, 'caaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '화양초등학교_500m', 37.54434516425474, 127.07102601237384,
-        '서울 광진구 군자로 9', 1),
-       (4, 'daaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '세종대대양홀_1km', 37.5500645169549, 127.0746945993655,
-        '서울 광진구 능동로 209', 2),
-       (5, 'eaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '건국대생명과학관_1km', 37.5411748285225, 127.0741238918269,
-        '서울 광진구 능동로 120', 3),
-       (6, 'faaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '스타시티롯데시네마_1km', 37.538584962359415, 127.0732318328757,
+values (1, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin과자및아이스크림매장1', 37.54475295439056, 127.06857657373725,
+        '서울 광진구 동일로26길 47', 4),
+       (2, 'baaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin아이스크림매장2', 37.543356243294255, 127.07018177829258,
+        '서울 광진구 능동로13길 39 한아름쇼핑센타 1층', 4),
+       (3, 'caaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin과자매장3', 37.54434516425474, 127.07102601237384,
+        '서울 광진구 군자로 9', 4),
+       (4, 'daaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin아이스크림매장4', 37.5500645169549, 127.0746945993655,
+        '서울 광진구 능동로 209', 4),
+       (5, 'eaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin일회용품매장5', 37.5411748285225, 127.0741238918269,
+        '서울 광진구 능동로 120', 4),
+       (6, 'faaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin일회용품매장6', 37.538584962359415, 127.0732318328757,
         '서울 광진구 아차산로 272 스타시티 2층', 3),
-       (7, 'gaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '군자역스타벅스_2km', 37.556827409019974, 127.07903460850035,
+       (7, 'gaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin라면매장7', 37.556827409019974, 127.07903460850035,
         '서울 광진구 천호대로 548', 2),
-       (8, 'haaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '세종초등학교_2km', 37.552975566626664, 127.07289701366835,
+       (8, 'haaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin라면매장8', 37.552975566626664, 127.07289701366835,
         '서울 광진구 군자로 114', 1),
-       (9, 'iaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', '어대놀이공원_2km', 37.5511030364638, 127.08399121555594,
+       (9, 'iaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin라면매장9', 37.5511030364638, 127.08399121555594,
         '서울 광진구 능동로 216', 2);
 -- store_keyword
 insert into store_keyword(store_id, keywords)
@@ -93,16 +94,16 @@ values (DATE('2021-03-01'), 110000, 1),
        (DATE('2021-11-01'), 30000, 1);
 -- payment (except "buy_list")
 insert into payment(total_price, pay_time, user_id, store_id)
-values (1000, DATE('2021-10-01 01:00:00'), 1, 1),
-       (5000, DATE('2021-10-01 01:00:00'), 1, 1),
-       (1500, DATE('2021-11-02 01:00:00'), 1, 1),
-       (2000, DATE('2021-11-03 02:00:00'), 1, 1),
-       (2000, DATE('2021-11-03 03:00:00'), 1, 1),
-       (2000, DATE('2021-11-04 03:00:00'), 1, 1),
-       (2000, DATE('2021-11-05 03:00:00'), 1, 1),
-       (2000, DATE('2021-11-05 04:00:00'), 1, 1),
-       (2000, DATE('2021-11-05 04:15:00'), 1, 1),
-       (2000, NOW(), 1, 1),
-       (2000, NOW(), 1, 1),
-       (2000, NOW(), 1, 1),
-       (2000, NOW(), 1, 1);
+values (1000, DATE('2021-10-01 01:00:00'), 4, 1),
+       (5000, DATE('2021-10-01 01:00:00'), 4, 1),
+       (1500, DATE('2021-11-02 01:00:00'), 1, 4),
+       (2000, DATE('2021-11-03 02:00:00'), 1, 4),
+       (2000, DATE('2021-11-03 03:00:00'), 1, 4),
+       (2000, DATE('2021-11-04 03:00:00'), 1, 4),
+       (2000, DATE('2021-11-05 03:00:00'), 1, 4),
+       (2000, DATE('2021-11-05 04:00:00'), 1, 4),
+       (2000, DATE('2021-11-05 04:15:00'), 1, 4),
+       (2000, NOW(), 1, 4),
+       (2000, NOW(), 1, 4),
+       (2000, NOW(), 1, 4),
+       (2000, NOW(), 1, 4);
