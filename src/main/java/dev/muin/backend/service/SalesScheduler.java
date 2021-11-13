@@ -27,7 +27,8 @@ public class SalesScheduler {
         List<Store> stores = storeRepository.findAll();
         log.info("Store is start to get monthly sales....");
         for(Store s: stores) {
-            int monthlySales = paymentRepository.findThisMonthByStore(s.getId());
+            Integer monthlySales = paymentRepository.findThisMonthByStore(s.getId());
+            if(monthlySales == null) monthlySales = 0;
             Sales sales = new Sales(LocalDate.now(), monthlySales, s);
             salesRepository.save(sales);
         }
@@ -38,7 +39,8 @@ public class SalesScheduler {
         List<Store> stores = storeRepository.findAll();
         log.info("[TEST] Store is start to get hourly sales....");
         for(Store s: stores) {
-            int hourlySales = paymentRepository.findThisMonthByStore(s.getId());
+            Integer hourlySales = paymentRepository.findThisMonthByStore(s.getId());
+            if(hourlySales==null) hourlySales = 0;
             log.info(String.format("store(id=%d,name=%s)'s sales=%d", s.getId(), s.getName(), hourlySales));
         }
     }
