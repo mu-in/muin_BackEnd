@@ -132,13 +132,13 @@ public class ManagerService {
 
     private int getMonthlySales(Short storeId) throws NullPointerException {
         Integer res = paymentRepository.findThisMonthByStore(storeId);
-        if (res == null) return -1; //throw new NullPointerException("Sales of this month is not calculated yet");
+        if (res == null) return 0; // No sales has occurred this month
         return res;
     }
 
     private int getTodaySales(Short storeId) {
         Integer res = paymentRepository.findTodayByStore(storeId);
-        if (res == null) return -1;// throw new NullPointerException("Sales of today is not occur");
+        if (res == null) return 0; // No sales has occurred today
         return res;
     }
 
