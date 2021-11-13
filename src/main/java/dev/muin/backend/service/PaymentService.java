@@ -1,6 +1,5 @@
 package dev.muin.backend.service;
 
-import dev.muin.backend.domain.Payment.Payment;
 import dev.muin.backend.domain.Payment.PaymentRepository;
 import dev.muin.backend.domain.Stock.StockRepository;
 import dev.muin.backend.domain.Store.Store;
