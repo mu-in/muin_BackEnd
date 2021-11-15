@@ -27,12 +27,13 @@ public class SalesScheduler {
         List<Store> stores = storeRepository.findAll();
         log.info("Store is start to get monthly sales.......");
         for(Store s: stores) {
-            Integer monthlySales = paymentRepository.findThisMonthByStore(s.getId());
+            Integer monthlySales = paymentRepository.findPrevMonthByStore(s.getId());
             if(monthlySales == null) monthlySales = 0;
-            Sales sales = new Sales(LocalDate.now(), monthlySales, s);
+            Sales sales = new Sales(LocalDate.now().minusMonths(1l), monthlySales, s); // get previous month's
             salesRepository.save(sales);
             log.info(String.format("store(id=%d,name=%s)'s sales=%d", s.getId(), s.getName(), monthlySales));
         }
         log.info("End to get monthly sales.......");
     }
+
 }
