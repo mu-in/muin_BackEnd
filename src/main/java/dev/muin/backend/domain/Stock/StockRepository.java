@@ -32,6 +32,6 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
     void updateStockByPayment(@Param("storeId") Short storeId, @Param("productId") int productId, @Param("quantity") int quantity);
 
 
-    @Query("SELECT s.store FROM Stock s WHERE s.store.id=:storeId AND s.product.id=:productId")
+    @Query("SELECT s FROM Stock s WHERE s.store.id=:storeId AND s.product.id=:productId")
     Optional<Stock> findByStoreIdAndProductId(@Param("storeId") Short storeId, @Param("productId") int productId);
 }
