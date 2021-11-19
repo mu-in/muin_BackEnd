@@ -8,7 +8,7 @@ import lombok.ToString;
 @Setter
 @Getter
 public class PaymentBuyListDto {
-    private Short id;
+    private Short id; // 상품 pk
     private String name;
     private Integer quantity;
 }

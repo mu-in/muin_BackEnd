@@ -27,8 +27,9 @@ public interface StockRepository extends JpaRepository<Stock, Integer> {
      * 기존 수량보다 같거나 적게 사갔는지 체크
      */
     @Modifying
-    @Query("UPDATE Stock s SET s.quantity =CASE WHEN s.quantity >= :quantity THEN (s.quantity - :quantity) ELSE s.quantity END WHERE s.id = :stockId AND s.store.id = :storeId")
-    void updateStockByPayment(@Param("storeId") Short storeId, @Param("stockId") int stockId, @Param("quantity") int quantity);
+    @Query("UPDATE Stock s SET s.quantity =CASE WHEN s.quantity >= :quantity THEN (s.quantity - :quantity) ELSE s.quantity END " +
+            "WHERE s.product.id = :productId AND s.store.id = :storeId")
+    void updateStockByPayment(@Param("storeId") Short storeId, @Param("productId") int productId, @Param("quantity") int quantity);
 
 
     @Query("SELECT s.store FROM Stock s WHERE s.store.id=:storeId AND s.product.id=:productId")
