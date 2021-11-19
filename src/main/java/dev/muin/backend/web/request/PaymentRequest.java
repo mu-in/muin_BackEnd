@@ -18,13 +18,12 @@ public class PaymentRequest {
     private String storeUuid;
     private List<PaymentBuyListDto> stocks;
     private Integer totalPrice;
-    private LocalDateTime payTime; //yyyy-mm-ddTHH:mm:ss
 
     public Payment toEntity(Store store) {
         return Payment.builder()
                 .buyList(new Gson().toJson(stocks))
                 .totalPrice(totalPrice)
-                .payTime(payTime)
+                .payTime(LocalDateTime.now())
                 .store(store)
                 .build();
     }
