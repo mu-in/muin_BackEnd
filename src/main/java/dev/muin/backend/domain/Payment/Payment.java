@@ -26,19 +26,15 @@ public class Payment {
     private LocalDateTime payTime;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
     @JoinColumn(name = "store_id")
     private Store store;
 
     @Builder
-    public Payment(String buyList, int totalPrice, LocalDateTime payTime, Store store, User user) {
+    public Payment(String buyList, int totalPrice, LocalDateTime payTime, Store store){//, User user) {
         this.buyList = buyList;
         this.totalPrice = totalPrice;
         this.payTime = payTime;
         this.store = store;
-        this.user = user;
+//        this.user = user;
     }
 }

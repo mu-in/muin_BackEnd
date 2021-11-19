@@ -47,9 +47,6 @@ public class User implements UserDetails {
     @OneToMany(mappedBy = "manager")
     private List<Store> stores;
 
-    @OneToMany(mappedBy = "user")
-    private List<Payment> payments;
-
     public void updateToManager(){
         this.role = Role.MANAGER;
     }
