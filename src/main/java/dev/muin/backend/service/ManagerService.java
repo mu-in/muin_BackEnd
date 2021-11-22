@@ -86,7 +86,7 @@ public class ManagerService {
 
         Stock stock = new Stock(addNewStockRequest.getQuantity(), store, product);
         stockRepository.save(stock);
-        log.info("Add new product(" + store.getName() + ") to store(" + product.getName() + ")");
+        log.info("Add new product(" + product.getName() + ") to store(" + store.getName() + ")");
 
         return RESPONSE_SUCCESS;
     }
