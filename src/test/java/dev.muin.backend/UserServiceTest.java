@@ -1,7 +1,5 @@
 package dev.muin.backend;
 
-import dev.muin.backend.config.jwt.JwtTokenProvider;
-import dev.muin.backend.domain.User.UserRepository;
 import dev.muin.backend.service.UserService;
 import dev.muin.backend.web.request.LoginRequest;
 import dev.muin.backend.web.response.LoginResponse;
@@ -10,10 +8,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.Date;
@@ -66,7 +61,6 @@ public class UserServiceTest {
         long now = new Date().getTime();//+25000l;
         final String seed = now+":"+uuid;
         log.info("seed: " + seed);
-
 
         boolean res = userService.QRauthentication(seed);
         assertThat(res).isEqualTo(true);
