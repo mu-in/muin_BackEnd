@@ -66,12 +66,10 @@ values (1, 'SNACK'),
        (9, 'RAMEN');
 -- stock
 insert into stock(quantity, store_id, product_id)
-values (0, 1, 0),
-       (5, 1, 22),
-       (10, 1, 44),
-       (11, 1, 88),
-       (9, 1, 122),
-       (100, 2, 144),
+select 9999, 1, product_id FROM product;
+
+insert into stock(quantity, store_id, product_id)
+values (100, 2, 144),
        (100, 2, 166),
        (100, 2, 177),
        (100, 3, 1),
