@@ -8,6 +8,8 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 
@@ -19,11 +21,14 @@ public class PaymentRequest {
     private List<PaymentBuyListDto> stocks;
     private Integer totalPrice;
 
+    /**
+     * payTime: Because Herorku server is located at USA, fixed ZonedDateTime to sync timezone
+     */
     public Payment toEntity(Store store) {
         return Payment.builder()
                 .buyList(new Gson().toJson(stocks))
                 .totalPrice(totalPrice)
-                .payTime(LocalDateTime.now())
+                .payTime(LocalDateTime.ofInstant(ZonedDateTime.now().toInstant(), ZoneId.of("Asia/Seoul")))
                 .store(store)
                 .build();
     }
