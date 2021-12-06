@@ -11,6 +11,9 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Slf4j
@@ -27,7 +30,7 @@ public class SalesScheduler {
         List<Store> stores = storeRepository.findAll();
         log.info("Store is start to get monthly sales.......");
         for(Store s: stores) {
-            Integer monthlySales = paymentRepository.findPrevMonthByStore(s.getId());
+            Integer monthlySales = paymentRepository.findPrevMonthByStore(s.getId(),  Date.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant()));
             if(monthlySales == null) monthlySales = 0;
             Sales sales = new Sales(LocalDate.now().minusMonths(1l), monthlySales, s); // get previous month's
             salesRepository.save(sales);

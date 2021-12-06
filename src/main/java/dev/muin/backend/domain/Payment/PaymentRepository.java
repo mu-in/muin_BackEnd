@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.Date;
 import java.util.List;
 
 public interface PaymentRepository extends JpaRepository<Payment, Short> {
@@ -19,16 +20,16 @@ public interface PaymentRepository extends JpaRepository<Payment, Short> {
     List<RecentPaymentDto> findAllOrderByPayTime(@Param("storeId") Short storeId);
 
     // 빨간줄 에러 아님
-    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND YEAR(p.payTime) = YEAR(CURDATE()) " +
-            "AND MONTH(p.payTime) = MONTH(CURDATE())")
-    Integer findThisMonthByStore(@Param("storeId") Short storeId);
+    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND YEAR(p.payTime) = YEAR(:now) " +
+            "AND MONTH(p.payTime) = MONTH(:now)")
+    Integer findThisMonthByStore(@Param("storeId") Short storeId, @Param("now") Date now);
 
     // 빨간줄 에러 아님
-    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND YEAR(p.payTime) = YEAR(CURDATE()) " +
-            "AND MONTH(p.payTime) = MONTH(CURDATE())-1")
-    Integer findPrevMonthByStore(@Param("storeId") Short storeId);
+    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND YEAR(p.payTime) = YEAR(:now) " +
+            "AND MONTH(p.payTime) = MONTH(:now)-1")
+    Integer findPrevMonthByStore(@Param("storeId") Short storeId, @Param("now") Date now);
 
     // 빨간줄 에러 아님
-    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND DATE(p.payTime)=CURDATE() " )
-    Integer findTodayByStore(@Param("storeId") Short storeId);
+    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND DATE(p.payTime)=:now")
+    Integer findTodayByStore(@Param("storeId") Short storeId, @Param("now") Date now);
 }

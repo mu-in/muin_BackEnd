@@ -22,6 +22,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -131,13 +135,15 @@ public class ManagerService {
     }
 
     private int getMonthlySales(Short storeId) throws NullPointerException {
-        Integer res = paymentRepository.findThisMonthByStore(storeId);
+        log.info("----"+String.valueOf(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toLocalDate()));
+        log.info("----"+String.valueOf(LocalDate.now()));
+        Integer res = paymentRepository.findThisMonthByStore(storeId, Date.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant()));
         if (res == null) return 0; // No sales has occurred this month
         return res;
     }
 
     private int getTodaySales(Short storeId) {
-        Integer res = paymentRepository.findTodayByStore(storeId);
+        Integer res = paymentRepository.findTodayByStore(storeId, Date.from(ZonedDateTime.now(ZoneId.of("Asia/Seoul")).toInstant()));
         if (res == null) return 0; // No sales has occurred today
         return res;
     }
