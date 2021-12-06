@@ -2,6 +2,7 @@ load data local infile './src/main/resources/csvData/Products_Transformed.csv' i
     fields terminated by ',' lines terminated by '\n' ignore 1 lines
     (@category_large, @data_id, @name, @price)
     set product_id = @data_id,name = @name, price = @price, category = @category_large;
+SET GLOBAL time_zone='Asia/Seoul';
 -- user
 insert into user(user_id, email, name, role, uuid)
 values (1, 'kim@gmail.com', 'kim', 'MANAGER', 'cccccccc-cccc-cccc-cccc-cccccccccccccccc'),

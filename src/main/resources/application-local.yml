@@ -1,7 +1,7 @@
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:mariadb://localhost:3306/muin?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
+      jdbc-url: jdbc:mariadb://localhost:3306/muin?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
       driver-class-name: org.mariadb.jdbc.Driver
       username: root
       password: mariadb
