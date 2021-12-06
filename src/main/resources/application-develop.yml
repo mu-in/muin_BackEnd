@@ -1,7 +1,7 @@
 spring:
   datasource:
     hikari:
-      jdbc-url: jdbc:mariadb://uyu7j8yohcwo35j3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/kg614li1sbrdwzux?characterEncoding=UTF-8&serverTimezone=UTC
+      jdbc-url: jdbc:mariadb://uyu7j8yohcwo35j3.cbetxkdyhwsb.us-east-1.rds.amazonaws.com:3306/kg614li1sbrdwzux?characterEncoding=UTF-8&serverTimezone=Asia/Seoul
       driver-class-name: org.mariadb.jdbc.Driver
       username: apmxqxkdd9pzrvcd
       password: y1tlva8cpsd0cs2v

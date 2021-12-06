@@ -94,7 +94,8 @@ values (DATE('2021-03-01'), 0, 4),
        (DATE('2021-07-01'), 0, 1),
        (DATE('2021-08-01'), 0, 1),
        (DATE('2021-09-01'), 0, 1),
-       (DATE('2021-10-01'), 6000, 1);
+       (DATE('2021-10-01'), 6000, 1),
+       (DATE('2021-11-01'), 26000, 1);
 -- payment (except "buy_list")
 insert into payment(total_price, pay_time, store_id)
 values (1000, DATE('2021-10-01 01:00:00'), 1),

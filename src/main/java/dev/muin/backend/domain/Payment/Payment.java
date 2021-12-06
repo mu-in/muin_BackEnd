@@ -22,7 +22,7 @@ public class Payment {
      * contains stock's [name, quantity, each price] // TODO JSON형으로 저장하자
      */
     private String buyList;
-    private int totalPrice; // TODO totalPrice 추출하는 메서드 만들기
+    private int totalPrice;
     private LocalDateTime payTime;
 
     @ManyToOne

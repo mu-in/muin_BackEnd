@@ -29,7 +29,6 @@ public interface PaymentRepository extends JpaRepository<Payment, Short> {
     Integer findPrevMonthByStore(@Param("storeId") Short storeId);
 
     // 빨간줄 에러 아님
-    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND DATE(p.payTime)=CURDATE() " +
-            "AND p.payTime<=NOW()")
+    @Query("SELECT SUM(p.totalPrice) FROM Payment p WHERE p.store.id = :storeId AND DATE(p.payTime)=CURDATE() " )
     Integer findTodayByStore(@Param("storeId") Short storeId);
 }
