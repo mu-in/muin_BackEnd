@@ -34,7 +34,7 @@ values ('test-serial-1'),
        ('test-serial-10');
 -- store
 insert into store(store_id, uuid_id, name, latitude, longitude, address, user_id)
-values (1, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin과자및아이스크림매장1', 37.54475295439056, 127.06857657373725,
+values (1, 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin매장', 37.54475295439056, 127.06857657373725,
         '서울 광진구 동일로26길 47', 4),
        (2, 'baaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaaaaaa', 'Muin아이스크림매장2', 37.543356243294255, 127.07018177829258,
         '서울 광진구 능동로13길 39 한아름쇼핑센타 1층', 4),
